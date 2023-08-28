@@ -1,0 +1,33 @@
+body {
+    font-family: tahoma;
+}
+
+
+.class-1 {
+    background-color: #405D9B;
+    color: #D9DFEB;
+    height: 50px;
+}
+
+.class-2 {
+    font-size: 30px;
+    margin: auto;
+    width: 800px;
+}
+
+.class-3 {
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 20px;
+    padding: 4px;
+    width: 400px;
+    background-image: url(../img/search.png);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.class-4 {
+    float: right;
+    width: 50px;
+}

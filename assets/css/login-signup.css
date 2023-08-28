@@ -1,0 +1,57 @@
+body {
+    background-color: #E9EBEE;
+    font-family: tahoma;
+}
+
+/* Top Bar Styles */
+.class-1 {
+    background-color: #3C5A99;
+    color: #D9DFEB;
+    height: 100px;
+    padding: 4px;
+}
+
+.class-2 {
+    font-size: 40px;
+}
+
+.class-3 {
+    background-color: #42B72A;
+    border-radius: 4px;
+    float: right;
+    padding: 4px;
+    text-align: center;
+    width: 70px;
+}
+
+/* Login/Signup Area Styles */
+.class-4 {
+    background-color: #FFF;
+    border: solid 2px #3C5A99;
+    font-weight: bold;
+    margin: auto;
+    margin-top: 50px;
+    padding: 10px;
+    padding-top: 50px;
+    text-align: center;
+    width: 800px;
+}
+
+.class-5 {
+    border: solid 1px #CCC;
+    border-radius: 4px;
+    font-size: 14px;
+    height: 40px;
+    padding: 4px;
+    width: 300px;
+}
+
+.class-6 {
+    background-color: #3C5A99;
+    border: none;
+    border-radius: 4px;
+    color: #FFF;
+    font-weight: bold;
+    height: 40px;
+    width: 300px;
+}
