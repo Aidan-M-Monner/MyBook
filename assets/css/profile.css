@@ -1,8 +1,9 @@
 body {
+    background-color: #C2D8D5;
     font-family: tahoma;
 }
 
-
+/*----------------- Top Bar ---------------------*/
 .class-1 {
     background-color: #405D9B;
     color: #D9DFEB;
@@ -16,18 +17,90 @@ body {
 }
 
 .class-3 {
+    background-image: url(../img/search.png);
+    background-position: right;
+    background-repeat: no-repeat;
     border: none;
     border-radius: 5px;
     font-size: 14px;
     height: 20px;
     padding: 4px;
     width: 400px;
-    background-image: url(../img/search.png);
-    background-position: right;
-    background-repeat: no-repeat;
 }
 
 .class-4 {
     float: right;
     width: 50px;
+}
+
+/*----------------- Cover Area ---------------------*/
+.class-5 {
+    margin: auto;
+    min-height: 400px;
+    width: 800px;
+}
+
+.class-6 {
+    background-color: #FFF;
+    color: #405d9b;
+    text-align: center;
+}
+
+.class-7 {
+    width: 100%;
+}
+
+.class-8 {
+    border: solid 2px #FFF;
+    border-radius: 50%;
+    margin-top: -125px;
+    width: 150px;
+}
+
+.class-9 {
+    font-size: 20px;
+}
+
+.class-10 {
+    display: inline-block;
+    margin: 2px;
+    width: 100px;
+}
+
+/*----------------- Below Cover Area ---------------------*/
+.class-11 {
+    display: flex;
+}
+
+/*----------------- Friends Area ---------------------*/
+.class-12 {
+    flex: 1;
+    min-height: 400px;
+}
+
+.class-14 {
+    background-color: #FFF;
+    color: #AAA;
+    margin-top: 20px;
+    min-height: 400px;
+    padding: 8px;
+}
+
+.class-15 {
+    clear: both;
+    color: #405d9b;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.class-16 {
+    float: left;
+    margin: 8px;
+    width: 75px;
+}
+
+/*----------------- Posts Area ---------------------*/
+.class-13 {
+    flex: 2.5;
+    min-height: 400px;
 }
