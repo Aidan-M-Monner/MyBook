@@ -72,18 +72,27 @@ body {
     display: flex;
 }
 
-/*----------------- Friends Area ---------------------*/
 .class-12 {
     flex: 1;
     min-height: 400px;
 }
 
+.class-13 {
+    flex: 2.5;
+    min-height: 400px;
+    padding: 20px;
+    padding-right: 0px;
+}
+
+/*----------------- Friends Area ---------------------*/
 .class-14 {
     background-color: #FFF;
-    color: #AAA;
+    color: #405D9B;
+    font-size: 20px;
     margin-top: 20px;
     min-height: 400px;
     padding: 8px;
+    text-align: center;
 }
 
 .class-15 {
@@ -99,8 +108,65 @@ body {
     width: 75px;
 }
 
+/*----------------- Posting Area ---------------------*/
+.class-17 {
+    background-color: #FFF;
+    border: solid thin #AAA;
+    padding: 10px;
+}
+
+.class-18 {
+    border: none;
+    font-family: tahoma;
+    font-size: 14px;
+    height: 60px;
+    width: 100%;
+}
+
+.class-19 {
+    background-color: #405D9B;
+    border: none;
+    border-radius: 2px;
+    color: #FFF;
+    font-size: 14px;
+    float: right;
+    padding: 4px;
+    width: 50px;
+}
+
 /*----------------- Posts Area ---------------------*/
-.class-13 {
-    flex: 2.5;
-    min-height: 400px;
+.class-20 {
+    background-color: #FFF;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.class-21 {
+    display: flex;
+    font-size: 13px;
+    margin-bottom: 20px;
+    padding: 4px;
+}
+
+.class-22 {
+    margin: 4px;
+    width: 75px;
+}
+
+.class-23 {
+    color: #405D9B;
+    font-weight: bold;
+}
+
+.class-24 {
+    color: #999;
+}
+
+
+/*----------------- Timeline - User Area ---------------------*/
+
+.class-25 {
+    border: solid 2px #FFF;
+    border-radius: 50%;
+    width: 150px;
 }

@@ -13,44 +13,14 @@
             </div>
         </div>
 
-        <!----------------- Cover Area ---------------------> 
+        <!----------------- Timeline Area ---------------------> 
         <div class="class-5">
-            <div class="class-6">
-                <img src="assets/img/mountain.jpg" class="class-7"/>
-                <img src="assets/img/selfie.jpg" class="class-8"/><br>
-                <div class="class-9">Mary Banda</div><br>
-                <div class="class-10">Timeline</div> 
-                <div class="class-10">About</div> 
-                <div class="class-10">Friends</div> 
-                <div class="class-10">Photos</div> 
-                <div class="class-10">Settings</div>
-            </div>
-
-            <!----------------- Below Cover Area ---------------------> 
             <div class="class-11">
-                <!----------------- Friends Area ---------------------> 
+                <!----------------- User Area ---------------------> 
                 <div class="class-12">
                     <div class="class-14">
-                        Friends <br>
-                        <div class="class-15">
-                            <img src="assets/img/user1.jpg" class="class-16"/><br>
-                            First User
-                        </div>
-
-                        <div class="class-15">
-                            <img src="assets/img/user2.jpg" class="class-16"/><br>
-                            Second User
-                        </div>
-
-                        <div class="class-15">
-                            <img src="assets/img/user3.jpg" class="class-16"/><br>
-                            Third User
-                        </div>
-
-                        <div class="class-15">
-                            <img src="assets/img/user4.jpg" class="class-16"/><br>
-                            Fourth User
-                        </div>
+                        <img src="assets/img/selfie.jpg" class="class-25"/><br>
+                        Mary Banda
                     </div>
                 </div>
 
