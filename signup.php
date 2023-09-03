@@ -1,3 +1,11 @@
+<?php
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        echo "<pre>";
+        print_r($_POST); // Contains all data posted by user
+        echo "</pre>";
+    }
+?>
+
 <html>
     <head>
         <title>MyBook | Signup</title>
@@ -13,19 +21,21 @@
         <!----------- Signup Area ------------->
         <div class="class-4">
             Signup to MyBook <br><br>
-            <input type="text" placeholder="First Name" class="class-5"><br><br>
-            <input type="text" placeholder="Last Name" class="class-5"><br><br>
+            <form method="post" action="signup.php">
+                <input type="text" placeholder="First Name" class="class-5" name="first_name"><br><br>
+                <input type="text" placeholder="Last Name" class="class-5" name="last_name"><br><br>
 
-            <select class="class-5">
-                <option value="" disabled selected>Gender</option>
-                <option>Male</option>
-                <option>Female</option>
-            </select><br><br>
+                <select class="class-5" name="gender">
+                    <option value="" disabled selected>Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select><br><br>
 
-            <input type="text" placeholder="Email" class="class-5"><br><br>
-            <input type="password" placeholder="Password" class="class-5"><br><br>
-            <input type="password" placeholder="Retype Password" class="class-5"><br><br>
-            <input type="submit" id="button" value="Signup" class="class-6"/><br><br>
+                <input type="text" placeholder="Email" class="class-5" name="email"><br><br>
+                <input type="password" placeholder="Password" class="class-5" name="password"><br><br>
+                <input type="password" placeholder="Retype Password" class="class-5" name="password2"><br><br>
+                <input type="submit" id="button" value="Signup" class="class-6"/><br><br>
+            </form>
         </div>
     </body>
 </html>
