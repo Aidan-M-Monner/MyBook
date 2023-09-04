@@ -43,6 +43,3 @@
             }
         }
     }
-
-    // --------- Create a new database --------- //
-    $DB = new Database();

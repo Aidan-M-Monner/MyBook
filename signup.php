@@ -1,8 +1,18 @@
 <?php
+    include("assets/classes/connect.php");
+    include("assets/classes/signup.inc.php"); 
+
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        echo "<pre>";
-        print_r($_POST); // Contains all data posted by user
-        echo "</pre>";
+        $signup = new Signup();
+        $result = $signup->evaluate($_POST);
+
+        if($result != "") {
+            echo $result;
+        }
+
+        // echo "<pre>";
+        // print_r($_POST); // Contains all data posted by user
+        // echo "</pre>";
     }
 ?>
 
