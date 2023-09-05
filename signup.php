@@ -2,17 +2,32 @@
     include("assets/classes/connect.php");
     include("assets/classes/signup.inc.php"); 
 
+    // --------- User Information --------- //
+    $first_name = "";
+    $last_name = "";
+    $gender = "Gender";
+    $email = "";
+
+    // --------- Check variables are correct  --------- //
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $signup = new Signup();
         $result = $signup->evaluate($_POST);
 
         if($result != "") {
+            echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
+            echo "<br>The following errors occured: <br><br>";
             echo $result;
+            echo "</div>";
+        } else {
+            header("Location: profile.php");
+            die;
         }
 
-        // echo "<pre>";
-        // print_r($_POST); // Contains all data posted by user
-        // echo "</pre>";
+        // Set user information already typed in
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $gender = $_POST['gender'];
+        $email = $_POST['email'];
     }
 ?>
 
@@ -32,16 +47,16 @@
         <div class="class-4">
             Signup to MyBook <br><br>
             <form method="post" action="signup.php">
-                <input type="text" placeholder="First Name" class="class-5" name="first_name"><br><br>
-                <input type="text" placeholder="Last Name" class="class-5" name="last_name"><br><br>
+                <input value='<?php echo $first_name ?>' type="text" placeholder="First Name" class="class-5" name="first_name"><br><br>
+                <input value='<?php echo $last_name ?>' type="text" placeholder="Last Name" class="class-5" name="last_name"><br><br>
 
                 <select class="class-5" name="gender">
-                    <option value="" disabled selected>Gender</option>
+                    <option><?php echo $gender ?></option>
                     <option>Male</option>
                     <option>Female</option>
                 </select><br><br>
 
-                <input type="text" placeholder="Email" class="class-5" name="email"><br><br>
+                <input value='<?php echo $email?>' type="text" placeholder="Email" class="class-5" name="email"><br><br>
                 <input type="password" placeholder="Password" class="class-5" name="password"><br><br>
                 <input type="password" placeholder="Retype Password" class="class-5" name="password2"><br><br>
                 <input type="submit" id="button" value="Signup" class="class-6"/><br><br>
