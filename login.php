@@ -1,9 +1,10 @@
 <?php
+    // --------- Necessary Files/Expressions to Start --------- //
     session_start();
     include("assets/classes/connect.php");
     include("assets/classes/login.inc.php"); 
 
-    // --------- User Information --------- //
+    // --------- User Information Variables --------- //
     $email = "";
     $password = "";
 
@@ -42,10 +43,12 @@
 
         <!----------- Login Area ------------->
         <div class="class-4">
-            Login to MyBook <br><br>
-            <input value="<?php echo $email ?>" type="text" placeholder="Email" class="class-5"><br><br>
-            <input value="<?php echo $password ?>" type="password" placeholder="Password" class="class-5"><br><br>
-            <input type="submit" id="button" value="Login" class="class-6"/><br><br>
+            <form method="post">
+                Login to MyBook <br><br>
+                <input name="email" value="<?php echo $email ?>" type="text" placeholder="Email" class="class-5"><br><br>
+                <input name="password" value="<?php echo $password ?>" type="password" placeholder="Password" class="class-5"><br><br>
+                <input type="submit" id="button" value="Login" class="class-6"/><br><br>
+            </form>
         </div>
     </body>
 </html>

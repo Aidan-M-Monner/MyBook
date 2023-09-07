@@ -64,9 +64,9 @@
             $email = $data['email'];
             $password = $data['password'];
 
-            // PHP Creates
-            $user_id = strtolower($first_name) . "." . strtolower($last_name);
-            $url_address = $this->create_user_id();
+            // PHP Created Variables
+            $user_id = $this->create_user_id();
+            $url_address = strtolower($first_name) . "." . strtolower($last_name);
 
             $query = "insert into users (user_id, first_name, last_name, gender, email, password, url_address) values ('$user_id', '$first_name', '$last_name', '$gender', '$email', '$password', '$url_address')";
 

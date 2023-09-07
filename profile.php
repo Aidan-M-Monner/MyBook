@@ -1,3 +1,39 @@
+<?php
+    // --------- Necessary Files/Expressions to Start --------- //
+    session_start();
+    include("assets/classes/connect.php");
+    include("assets/classes/login.inc.php"); 
+    include("assets/classes/user.php"); 
+
+    // --------- Check user logged in --------- //
+    if(isset($_SESSION['mybook_user_id']) && is_numeric($_SESSION['mybook_user_id'])) {
+        $id = $_SESSION['mybook_user_id'];
+        $login = new Login();
+        $result = $login->check_login($id);
+
+
+        if($result) {
+            // Retrieve user data
+            $user = new User();
+            $user_data = $user->get_data($id);
+
+            if(!$user_data) { // In case of an error where there is no data/row
+                header("Location: login.php");
+                die;
+            }
+        } else {
+            header("Location: login.php");
+            die;
+        }
+    } else {
+        header("Location: login.php");
+        die;
+    }
+
+    // --------- User Information Variables --------- //
+    $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
+?>
+
 <html>
     <head>
         <title>MyBook | Profile</title>
@@ -10,6 +46,9 @@
                 MyBook &nbsp; &nbsp;
                 <input type="text" placeholder="Search for people..." class="class-3">
                 <img src="assets/img/selfie.jpg" class="class-4"/>
+                <a href="logout.php">
+                    <span class="class-a">Logout</span>
+                </a>
             </div>
         </div>
 
@@ -18,7 +57,7 @@
             <div class="class-6">
                 <img src="assets/img/mountain.jpg" class="class-7"/>
                 <img src="assets/img/selfie.jpg" class="class-8"/><br>
-                <div class="class-9">Mary Banda</div><br>
+                <div class="class-9"><?php echo $full_name ?></div><br>
                 <div class="class-10">Timeline</div> 
                 <div class="class-10">About</div> 
                 <div class="class-10">Friends</div> 

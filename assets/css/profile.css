@@ -33,6 +33,13 @@ body {
     width: 50px;
 }
 
+.class-a {
+    color: #FFF; 
+    float: right; 
+    font-size: 11px; 
+    margin: 10px;
+}
+
 /*----------------- Cover Area ---------------------*/
 .class-5 {
     margin: auto;

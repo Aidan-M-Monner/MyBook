@@ -1,8 +1,9 @@
 <?php
+    // --------- Necessary Files --------- //
     include("assets/classes/connect.php");
     include("assets/classes/signup.inc.php"); 
 
-    // --------- User Information --------- //
+    // --------- User Information Variables --------- //
     $first_name = "";
     $last_name = "";
     $gender = "Gender";

@@ -2,6 +2,7 @@
     class Login {
         private $error = "";
 
+        // --------- Checks if User Profile Exists and Information Correct --------- //
         public function evaluate($data) {
             $email = addslashes($data['email']);
             $password = addslashes($data['password']);
@@ -16,14 +17,29 @@
                 $row = $result[0]; // grabs array to get password for checking.
                 if($password == $row['password']) {
                     // Create a session data
-                    $_SESSION['user_id'] = $row['user_id'];
+                    $_SESSION['mybook_user_id'] = $row['user_id'];
                 } else {
-                    $error .= "Wrong email or password <br>";
+                    $this->error .= "Wrong email or password <br>";
                 }
             } else {
-                $error .= "No such email was found <br>";
+                $this->error .= "No such email was found <br>";
             }
             
-            return $error;
+            return $this->error;
+        }
+
+        // --------- Checks if User Profile is Logged In --------- //
+        public function check_login($id) {
+            $query = "select user_id from users where user_id = '$id' limit 1";
+
+            $DB = new Database();
+            $result = $DB->read($query);
+
+            // Checks to see if user_id is returned.
+            if($result) {
+                return true;
+            }
+
+            return false;
         }
     }
