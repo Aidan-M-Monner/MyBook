@@ -3,7 +3,8 @@
     session_start();
     include("assets/classes/connect.php");
     include("assets/classes/login.inc.php"); 
-    include("assets/classes/user.php"); 
+    include("assets/classes/post.php"); 
+    include("assets/classes/user.php");
 
     // --------- Check user logged in --------- //
     if(isset($_SESSION['mybook_user_id']) && is_numeric($_SESSION['mybook_user_id'])) {
@@ -32,6 +33,14 @@
 
     // --------- User Information Variables --------- //
     $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
+
+
+    // --------- Posting Section --------- //
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+        $post = new Post();
+        $id = $_SESSION['mybook_user_id'];
+        $result = $post->create_post($id, $_POST);
+    }
 ?>
 
 <html>
@@ -96,8 +105,10 @@
                 <!----------------- Posting Area ---------------------> 
                 <div class="class-13">
                     <div class="class-17">
-                        <textarea placeholder="What's on your mind?" class="class-18"></textarea>
-                        <input type="submit" value="Post" class="class-19"/><br><br>
+                        <form method="post">
+                            <textarea placeholder="What's on your mind?" class="class-18" name="post"></textarea>
+                            <input type="submit" value="Post" class="class-19"/><br><br>
+                        </form>
                     </div>
 
                 <!----------------- Posts Area ---------------------> 
