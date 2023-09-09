@@ -3,7 +3,7 @@
     session_start();
     include("assets/classes/connect.php");
     include("assets/classes/login.inc.php"); 
-    include("assets/classes/post.php"); 
+    include("assets/classes/post.inc.php"); 
     include("assets/classes/user.php");
 
     // --------- Check user logged in --------- //
@@ -40,7 +40,23 @@
         $post = new Post();
         $id = $_SESSION['mybook_user_id'];
         $result = $post->create_post($id, $_POST);
+
+        // Ensure that data cannot be sent again when page refreshes.
+        if($result == "") {
+            header("Location: profile.php");
+            die;
+        } else {
+            echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
+            echo "<br>The following errors occured: <br><br>";
+            echo $result;
+            echo "</div>";
+        }
     }
+
+    // --------- Posts Section --------- //
+    $post = new Post();
+    $id = $_SESSION['mybook_user_id'];
+    $posts = $post->get_posts($id);
 ?>
 
 <html>
@@ -113,35 +129,13 @@
 
                 <!----------------- Posts Area ---------------------> 
                     <div class="class-20">
-                        <div class="class-21">
-                            <div>
-                                <img src="assets/img/user1.jpg" class="class-22"/>
-                            </div>
-                            <div>
-                                <div class="class-23">First User</div>
-                                Finn Mertens[1] (also called Finn the Human, Pen in the original short, 
-                                and identified as P-G-8-7 Mertens[2]) is the main protagonist in Adventure Time. 
-                                He also appeared in the spin-off series Adventure Time: Distant Lands. He was voiced by Jeremy Shada in most appearances. 
-                                The character made his debut in the original pilot, where he is named "Pen" and voiced by Zack Shada, Jeremy's older brother. 
-                                Jonathan Frakes voices Finn as an adult in some appearances.
-                                <br><br>
-                                <a href="#">Like</a> . <a href="#">Comment</a> . <span class="class-24">August 30 2023</span>
-                            </div>
-                        </div>
-
-                        <div class="class-21">
-                            <div>
-                                <img src="assets/img/user2.jpg" class="class-22"/>
-                            </div>
-                            <div>
-                                <div class="class-23">Second User</div>
-                                Jake (full title: Jacob "Jake" the Dog, Sr.[2]) is the deuteragonist of Adventure Time. 
-                                He is a dog/shape-shifter hybrid, referred to by others as a "magical dog," 
-                                and Finn's constant companion, best friend, and adoptive brother.
-                                <br><br>
-                                <a href="#">Like</a> . <a href="#">Comment</a> . <span class="class-24">August 30 2023</span>
-                            </div>
-                        </div>
+                        <?php
+                            if($posts) {
+                                foreach($posts as $row) {
+                                    include("post.php");
+                                }
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
