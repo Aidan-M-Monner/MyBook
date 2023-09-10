@@ -4,32 +4,11 @@
     include("assets/classes/connect.php");
     include("assets/classes/login.inc.php"); 
     include("assets/classes/post.inc.php"); 
-    include("assets/classes/user.php");
+    include("assets/classes/user.inc.php");
 
     // --------- Check user logged in --------- //
-    if(isset($_SESSION['mybook_user_id']) && is_numeric($_SESSION['mybook_user_id'])) {
-        $id = $_SESSION['mybook_user_id'];
-        $login = new Login();
-        $result = $login->check_login($id);
-
-
-        if($result) {
-            // Retrieve user data
-            $user = new User();
-            $user_data = $user->get_data($id);
-
-            if(!$user_data) { // In case of an error where there is no data/row
-                header("Location: login.php");
-                die;
-            }
-        } else {
-            header("Location: login.php");
-            die;
-        }
-    } else {
-        header("Location: login.php");
-        die;
-    }
+    $login = new Login();
+    $user_data = $login->check_login($_SESSION['mybook_user_id']);
 
     // --------- User Information Variables --------- //
     $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
@@ -57,6 +36,11 @@
     $post = new Post();
     $id = $_SESSION['mybook_user_id'];
     $posts = $post->get_posts($id);
+
+    // --------- Friends Section --------- //
+    $user = new User();
+    $id = $_SESSION['mybook_user_id'];
+    $friends = $user->get_friends($id);
 ?>
 
 <html>
@@ -83,7 +67,7 @@
                 <img src="assets/img/mountain.jpg" class="class-7"/>
                 <img src="assets/img/selfie.jpg" class="class-8"/><br>
                 <div class="class-9"><?php echo $full_name ?></div><br>
-                <div class="class-10">Timeline</div> 
+                <a href="timeline.php"><div class="class-10">Timeline</div></a>
                 <div class="class-10">About</div> 
                 <div class="class-10">Friends</div> 
                 <div class="class-10">Photos</div> 
@@ -96,25 +80,13 @@
                 <div class="class-12">
                     <div class="class-14">
                         Friends <br>
-                        <div class="class-15">
-                            <img src="assets/img/user1.jpg" class="class-16"/><br>
-                            First User
-                        </div>
-
-                        <div class="class-15">
-                            <img src="assets/img/user2.jpg" class="class-16"/><br>
-                            Second User
-                        </div>
-
-                        <div class="class-15">
-                            <img src="assets/img/user3.jpg" class="class-16"/><br>
-                            Third User
-                        </div>
-
-                        <div class="class-15">
-                            <img src="assets/img/user4.jpg" class="class-16"/><br>
-                            Fourth User
-                        </div>
+                        <?php
+                            if($posts) {
+                                foreach($friends as $FRIEND_ROW) {
+                                    include("user.php");
+                                }
+                            }
+                        ?>
                     </div>
                 </div>
 
@@ -131,7 +103,9 @@
                     <div class="class-20">
                         <?php
                             if($posts) {
-                                foreach($posts as $row) {
+                                foreach($posts as $ROW) {
+                                    $user = new User();
+                                    $ROW_USER = $user->get_user($ROW['user_id']);
                                     include("post.php");
                                 }
                             }
