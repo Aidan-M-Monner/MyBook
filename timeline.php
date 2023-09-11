@@ -1,3 +1,19 @@
+<?php
+    // --------- Necessary Files/Expressions to Start --------- //
+    session_start();
+    include("assets/classes/connect.php");
+    include("assets/classes/login.inc.php"); 
+    include("assets/classes/post.inc.php"); 
+    include("assets/classes/user.inc.php");
+
+    // --------- Check user logged in --------- //
+    $login = new Login();
+    $user_data = $login->check_login($_SESSION['mybook_user_id']);
+
+    // --------- User Information Variables --------- //
+    $full_name = $user_data['first_name'] . "<br>" . $user_data['last_name'];
+?>
+
 <html>
     <head>
         <title>MyBook | Profile</title>
@@ -5,13 +21,7 @@
     </head>
     <body>
         <!----------------- Top Bar ---------------------> 
-        <div class="class-1">
-            <div class="class-2">
-                MyBook &nbsp; &nbsp;
-                <input type="text" placeholder="Search for people..." class="class-3">
-                <img src="assets/img/selfie.jpg" class="class-4"/>
-            </div>
-        </div>
+        <?php include("header.php"); ?>
 
         <!----------------- Timeline Area ---------------------> 
         <div class="class-5">
@@ -20,7 +30,7 @@
                 <div class="class-12">
                     <div class="class-14">
                         <img src="assets/img/selfie.jpg" class="class-25"/><br>
-                        Mary Banda
+                        <a href="profile.php" class="class-26"><?php echo $full_name; ?></a>
                     </div>
                 </div>
 

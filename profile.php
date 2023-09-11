@@ -50,22 +50,17 @@
     </head>
     <body>
         <!----------------- Top Bar ---------------------> 
-        <div class="class-1">
-            <div class="class-2">
-                MyBook &nbsp; &nbsp;
-                <input type="text" placeholder="Search for people..." class="class-3">
-                <img src="assets/img/selfie.jpg" class="class-4"/>
-                <a href="logout.php">
-                    <span class="class-a">Logout</span>
-                </a>
-            </div>
-        </div>
+        <?php include("header.php"); ?>
 
         <!----------------- Cover Area ---------------------> 
         <div class="class-5">
             <div class="class-6">
                 <img src="assets/img/mountain.jpg" class="class-7"/>
                 <img src="assets/img/selfie.jpg" class="class-8"/><br>
+                <div class="class-c"> 
+                    <a href="change_profile_image.php" class="class-d">Change Image</a> | 
+                    <a href="" class="class-d">Change Cover</a>
+                </div>
                 <div class="class-9"><?php echo $full_name ?></div><br>
                 <a href="timeline.php"><div class="class-10">Timeline</div></a>
                 <div class="class-10">About</div> 

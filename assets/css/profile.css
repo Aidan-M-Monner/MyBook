@@ -34,6 +34,11 @@ body {
 }
 
 .class-a {
+    color: #FFF;
+    text-decoration: none;
+}
+
+.class-b {
     color: #FFF; 
     float: right; 
     font-size: 11px; 
@@ -62,6 +67,16 @@ body {
     border-radius: 50%;
     margin-top: -125px;
     width: 150px;
+}
+
+.class-c {
+    font-size: 10px;
+    text-decoration: none;
+}
+
+.class-d {
+    color: #F0F;
+    text-decoration: none;
 }
 
 .class-9 {
@@ -138,7 +153,6 @@ body {
     font-size: 14px;
     float: right;
     padding: 4px;
-    width: 50px;
 }
 
 /*----------------- Posts Area ---------------------*/
@@ -176,4 +190,8 @@ body {
     border: solid 2px #FFF;
     border-radius: 50%;
     width: 150px;
+}
+
+.class-26 {
+    text-decoration: none;
 }
