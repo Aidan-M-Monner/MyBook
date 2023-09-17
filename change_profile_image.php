@@ -11,9 +11,6 @@
     $login = new Login();
     $user_data = $login->check_login($_SESSION['mybook_user_id']);
 
-    // --------- User Information Variables --------- //
-    $full_name = $user_data['first_name'] . "<br>" . $user_data['last_name'];
-
     // --------- Image Upload Variables --------- //
     $allowed_size = (1024 * 1024) * 3;
     $allowed_types = ['image/jpeg', 'image/png'];
@@ -27,16 +24,34 @@
                     // Move image into the uploads folder
                     $filename = "uploads/" . $_FILES['file']['name'];
                     move_uploaded_file($_FILES['file']['tmp_name'], $filename);
+                    $change = "profile";
+
+                    // Ensure that change is set
+                    if(isset($_GET['change'])) {
+                        $change = $_GET['change'];
+                    }
 
                     // Crop the image
                     $image = new Image();
                     $file_type = $_FILES['file']['type'];
-                    $image->crop_image($file_type, $filename, $filename, 800, 800);
+
+                    // Check which type of image to crop
+                    if($change == "cover") {
+                        $image->crop_image($file_type, $filename, $filename, 1366, 488);
+                    } else {
+                        $image->crop_image($file_type, $filename, $filename, 800, 800);
+                    }
 
                     // Add image path to database
                     if(file_exists($filename)) {
                         $user_id = $user_data['user_id'];
-                        $query = "update users set profile_image = '$filename' where user_id = '$user_id' limit 1";
+
+                        // Check which column to send data to
+                        if($change == "cover") {
+                            $query = "update users set cover_image = '$filename' where user_id = '$user_id' limit 1";
+                        } else {
+                            $query = "update users set profile_image = '$filename' where user_id = '$user_id' limit 1";
+                        }
         
                         $DB = new Database();
                         $DB->save($query);

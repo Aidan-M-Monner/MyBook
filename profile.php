@@ -12,10 +12,21 @@
 
     // --------- User Information Variables --------- //
     $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
+
     $image = "";
     if(file_exists($user_data['profile_image'])) {
         $image = $user_data['profile_image'];
+    } else if ($user_data['gender'] == "Male") {
+        $image = "assets/img/male-icon.png";
+    } else if ($user_data['gender'] == "Female") {
+        $image = "assets/img/female-icon.png";
     }
+
+    $cover = "assets/img/mountain.jpg";
+    if(file_exists($user_data['cover_image'])) {
+        $cover = $user_data['cover_image'];
+    }
+
 
 
 
@@ -60,11 +71,11 @@
         <!----------------- Cover Area ---------------------> 
         <div class="class-5">
             <div class="class-6">
-                <img src="assets/img/mountain.jpg" class="class-7"/>
+                <img src="<?php echo $cover; ?>" class="class-7"/>
                 <img src="<?php echo $image; ?>" class="class-8"/><br>
                 <div class="class-c"> 
-                    <a href="change_profile_image.php" class="class-d">Change Image</a> | 
-                    <a href="" class="class-d">Change Cover</a>
+                    <a href="change_profile_image.php?change=profile" class="class-d">Change Image</a> | 
+                    <a href="change_profile_image.php?change=cover" class="class-d">Change Cover</a>
                 </div>
                 <div class="class-9"><?php echo $full_name ?></div><br>
                 <a href="timeline.php"><div class="class-10">Timeline</div></a>
