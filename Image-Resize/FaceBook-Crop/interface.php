@@ -1,6 +1,11 @@
 <style type="text/css">
     #image {
         position: relative;
+        -khtml-user-select: none;
+        -o-user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
     }
 
     #container {
@@ -34,6 +39,14 @@
     var mouseMove = false;
     var mouseDown = false;
 
+    var initMouseX = 0;
+    var initMouseY = 0;
+    var initImageX = 0;
+    var initImageY = 0;
+
+    var ratio = 1;
+    reset_image();
+
     cropper.style.left = container.offsetLeft;
     cropper.style.top = container.offsetTop;
 
@@ -41,13 +54,36 @@
         info.innerHTML = event.clientX + ":" + event.clientY; // Takes in mouse movements on x/y axis
 
         if(mouseMove && mouseDown) {
-            image.style.left = event.clientX - container.offsetLeft;
-            image.style.top = event.clientY - container.offsetTop;
+            var x = event.clientX - initMouseX;
+            var y = event.clientY - initMouseY;
+
+            x = initImageX + x; // current position of image + movement
+            y = initImageY + y;
+
+            image.style.left = x;
+            image.style.top = y;
+        }
+    }
+
+    window.onmouseup = function(event) {
+        mouseDown = false;
+    }
+
+    function reset_image() {
+        if(image.naturalWidth > image.naturalHeight) {
+            ratio = image.naturalWidth / image.naturalHeight;
+            image.style.height = container.clientHeight; // Make height as big as cropping space
+            image.style.width = container.clientWidth * ratio;
+            image.style.top = 0;
         }
     }
 
     function mouseDown_on() {
         mouseDown = true;
+        initMouseX = event.clientX; // Takes in distance moved horizontally
+        initMouseY = event.clientY; // Takes in distance moved vertically
+        initImageX = image.offsetLeft - container.offsetLeft; // Movement of image Left
+        initImageY = image.offsetTop - container.offsetTop; // Movement Image Top
     }
 
     function mouseDown_off() {
