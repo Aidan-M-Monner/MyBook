@@ -16,11 +16,12 @@
     }
 
     #cropper {
-        background-color: rgba(0,0,0,0.5);
         width: 400px;
         height: 400px;
         position: absolute;
         cursor: move;
+        background-image: url(transparent.png);
+        background-size: 100% 100%;
     }
 
     #range {
@@ -28,21 +29,28 @@
         margin: auto;
         display: block;
     }
+
+    #output {
+        margin: auto;
+        width: 400px;
+    }
 </style>
 
 <div id="container" onmousedown="mouseDown_on(event)" onmouseup="mouseDown_off(event)" onmouseenter="mouseMove_on(event)" onmouseleave="mouseMove_off(event)">
     <img id="image" src="image.jpg" style="width: 400px;">
     <div id="cropper"></div>
 </div><br>
-<input id="range" type="range" min="10" max="40" onmousemove="resize_image(event)">
-<div id="info"></div>
+<input id="range" type="range" min="10" max="40" onmousemove="resize_image(event)"><br>
+<button onclick="crop(event)">Crop</button><br>
+
+<div id="output"></div>
 
 <script type="text/javascript">
-    var info = document.getElementById("info");
     var image = document.getElementById("image");
     var container = document.getElementById("container");
     var cropper = document.getElementById("cropper");
     var range = document.getElementById("range");
+    var output = document.getElementById("output");
 
     var mouseMove = false;
     var mouseDown = false;
@@ -66,8 +74,6 @@
 
 
     window.onmousemove = function(event) {
-        info.innerHTML = event.clientX + ":" + event.clientY; // Takes in mouse movements on x/y axis
-
         if(mouseMove && mouseDown) {
             var x = event.clientX - initMouseX;
             var y = event.clientY - initMouseY;
@@ -159,6 +165,15 @@
             // Center image
             var extra = (image.clientWidth - container.clientWidth) / 2;
             image.style.left = extra * -1;
+        } else {
+            ratio = image.naturalHeight / image.naturalWidth;
+            image.style.height = container.clientHeight - (margin * 2) * ratio; // Make height as big as cropping space
+            image.style.width = (container.clientWidth - (margin * 2));
+            image.style.left = margin;
+
+            // Center image
+            var extra = (image.clientHeight - container.clientHeight) / 2;
+            image.style.top = extra * -1;
         }
 
         range.value = 20;
@@ -182,5 +197,54 @@
 
     function mouseMove_off() {
         mouseMove = false;
+    }
+
+    function crop() {
+        if(image.naturalWidth > image.naturalHeight) {
+            ratio = image.naturalHeight / (container.clientHeight - (margin * 2));
+        } else {
+            ratio = image.naturalWidth / (container.clientWidth - (margin * 2));
+        }
+        var x1 = image.style.left;
+        x1 = x1.replace("px", "");
+        x1 = x1 - margin;
+
+        if(x1 < 0) {
+            x1 = x1 * -1
+        }
+
+        var y1 = image.style.top;
+        y1 = y1.replace("px", "");
+        y1 = y1 - margin;
+
+        if(y1 < 0) {
+            y1 = y1 * -1
+        }
+
+        var x2 = (x1 + (container.clientWidth - (margin * 2)));
+        var y2 = (y1 + (container.clientHeight - (margin * 2)));
+
+        var width = (x2 - x1) * ratio;
+        var height = (y2 - y1) * ratio;
+
+        x1 = x1 * ratio;
+        y2 = y1 * ratio; 
+
+        var zoomFactor = (range.value / 10);
+
+        x1 = x1 / zoomFactor;
+        y1 = y1 / zoomFactor;
+        width = width / zoomFactor;
+        height = height / zoomFactor;
+
+        xhr = new XMLHttpRequest();
+        xhr.open("GET", "crop.php?x=" + x1 + "&y=" + y1 + "&width=" + width + "&height=" + height, true);
+        xhr.onload = function() {
+            if(xhr.status === 200) {
+                output.innerHTML = xhr.responseText;
+            }
+        }
+
+        xhr.send();
     }
 </script>
