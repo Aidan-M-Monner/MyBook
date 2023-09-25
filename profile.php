@@ -27,9 +27,6 @@
         $cover = $user_data['cover_image'];
     }
 
-
-
-
     // --------- Posting Section --------- //
     if($_SERVER['REQUEST_METHOD'] == "POST") {
         $post = new Post();

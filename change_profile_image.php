@@ -22,7 +22,17 @@
             if(in_array($_FILES['file']['type'], $allowed_types)) {
                 if($_FILES['file']['size'] < $allowed_size) {
                     // Move image into the uploads folder
-                    $filename = "uploads/" . $_FILES['file']['name'];
+                    $folder = "uploads/" . $user_data['user_id'] . "/";
+
+                    // Create Folder
+                    if(!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
+                    $image = new Image();
+                    $file_type = $_FILES['file']['type'];
+
+                    $filename = $folder . $image->generate_filename(15) . ".jpg";
                     move_uploaded_file($_FILES['file']['tmp_name'], $filename);
                     $change = "profile";
 
@@ -30,10 +40,6 @@
                     if(isset($_GET['change'])) {
                         $change = $_GET['change'];
                     }
-
-                    // Crop the image
-                    $image = new Image();
-                    $file_type = $_FILES['file']['type'];
 
                     // Check which type of image to crop
                     if($change == "cover") {
@@ -96,6 +102,21 @@
                         <div class="class-17">
                             <input type="file" name="file">
                             <input type="submit" value="Change" class="class-19"/><br>
+                            
+                            <div style="text-align: center;">
+                                <?php 
+                                    $change = "profile";
+
+                                    // Check for mode
+                                    if(isset($_GET['change']) && $_GET['change'] == "cover") {
+                                        $change = "cover";
+                                        echo "<img src='$user_data[cover_image]' style='max-width: 500px;'>";
+                                    } else {
+                                        echo "<img src='$user_data[profile_image]' style='max-width: 200px; max-height: 200px;'>";
+                                    }
+                                    echo "<img src=''>"; 
+                                ?>
+                            </div>
                         </div>
                     </form>
                 </div>
