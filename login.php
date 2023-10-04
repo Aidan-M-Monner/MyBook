@@ -1,32 +1,7 @@
 <?php
     // --------- Necessary Files/Expressions to Start --------- //
     session_start();
-    include("assets/classes/connect.php");
-    include("assets/classes/login.inc.php"); 
-
-    // --------- User Information Variables --------- //
-    $email = "";
-    $password = "";
-
-    // --------- Check variables are correct  --------- //
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $login = new Login();
-        $result = $login->evaluate($_POST);
-
-        if($result != "") {
-            echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
-            echo "<br>The following errors occured: <br><br>";
-            echo $result;
-            echo "</div>";
-        } else {
-            header("Location: profile.php");
-            die;
-        }
-
-        // Set user information already typed in
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-    }
+    include("assets/php/login_assets.php");
 ?>
 
 <html>
@@ -38,7 +13,7 @@
         <!----------- Top Bar ------------->
         <div class="class-1">
             <div class="class-2">MyBook</div>
-            <div class="class-3">Signup</div>
+            <a href="signup.php"><div class="class-3">Signup</div></a>
         </div>
 
         <!----------- Login Area ------------->

@@ -1,17 +1,6 @@
 <?php
-    // --------- Necessary Files/Expressions to Start --------- //
     session_start();
-    include("assets/classes/connect.php");
-    include("assets/classes/login.inc.php"); 
-    include("assets/classes/post.inc.php"); 
-    include("assets/classes/user.inc.php");
-
-    // --------- Check user logged in --------- //
-    $login = new Login();
-    $user_data = $login->check_login($_SESSION['mybook_user_id']);
-
-    // --------- User Information Variables --------- //
-    $full_name = $user_data['first_name'] . "<br>" . $user_data['last_name'];
+    include("assets/php/common_assets.php");
 ?>
 
 <html>
@@ -29,7 +18,7 @@
                 <!----------------- User Area ---------------------> 
                 <div class="class-12">
                     <div class="class-14">
-                        <img src="assets/img/selfie.jpg" class="class-25"/><br>
+                        <img src="<?php echo $image; ?>" class="class-25"/><br>
                         <a href="profile.php" class="class-26"><?php echo $full_name; ?></a>
                     </div>
                 </div>

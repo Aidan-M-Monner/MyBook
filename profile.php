@@ -1,59 +1,7 @@
 <?php
-    // --------- Necessary Files/Expressions to Start --------- //
     session_start();
-    include("assets/classes/connect.php");
-    include("assets/classes/login.inc.php"); 
-    include("assets/classes/post.inc.php"); 
-    include("assets/classes/user.inc.php");
-
-    // --------- Check user logged in --------- //
-    $login = new Login();
-    $user_data = $login->check_login($_SESSION['mybook_user_id']);
-
-    // --------- User Information Variables --------- //
-    $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
-
-    $image = "";
-    if(file_exists($user_data['profile_image'])) {
-        $image = $user_data['profile_image'];
-    } else if ($user_data['gender'] == "Male") {
-        $image = "assets/img/male-icon.png";
-    } else if ($user_data['gender'] == "Female") {
-        $image = "assets/img/female-icon.png";
-    }
-
-    $cover = "assets/img/mountain.jpg";
-    if(file_exists($user_data['cover_image'])) {
-        $cover = $user_data['cover_image'];
-    }
-
-    // --------- Posting Section --------- //
-    if($_SERVER['REQUEST_METHOD'] == "POST") {
-        $post = new Post();
-        $id = $_SESSION['mybook_user_id'];
-        $result = $post->create_post($id, $_POST);
-
-        // Ensure that data cannot be sent again when page refreshes.
-        if($result == "") {
-            header("Location: profile.php");
-            die;
-        } else {
-            echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
-            echo "<br>The following errors occured: <br><br>";
-            echo $result;
-            echo "</div>";
-        }
-    }
-
-    // --------- Posts Section --------- //
-    $post = new Post();
-    $id = $_SESSION['mybook_user_id'];
-    $posts = $post->get_posts($id);
-
-    // --------- Friends Section --------- //
-    $user = new User();
-    $id = $_SESSION['mybook_user_id'];
-    $friends = $user->get_friends($id);
+    include("assets/php/common_assets.php");
+    include("assets/php/profile_assets.php");
 ?>
 
 <html>
@@ -89,7 +37,7 @@
                     <div class="class-14">
                         Friends <br>
                         <?php
-                            if($posts) {
+                            if($friends) {
                                 foreach($friends as $FRIEND_ROW) {
                                     include("user.php");
                                 }
@@ -101,8 +49,9 @@
                 <!----------------- Posting Area ---------------------> 
                 <div class="class-13">
                     <div class="class-17">
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                             <textarea placeholder="What's on your mind?" class="class-18" name="post"></textarea>
+                            <input type="file" name="file"/>
                             <input type="submit" value="Post" class="class-19"/><br><br>
                         </form>
                     </div>
