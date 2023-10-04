@@ -54,12 +54,18 @@
                         // Check which column to send data to
                         if($change == "cover") {
                             $query = "update users set cover_image = '$filename' where user_id = '$user_id' limit 1";
+                            $_POST['is_cover_image'] = 1;
                         } else {
                             $query = "update users set profile_image = '$filename' where user_id = '$user_id' limit 1";
+                            $_POST['is_profile_image'] = 1;
                         }
-        
+
                         $DB = new Database();
                         $DB->save($query);
+
+                        // Create a post
+                        $post = new Post();
+                        $result = $post->create_post($user_id, $_POST, $_FILES);
         
                         header("Location: profile.php");
                     }

@@ -8,8 +8,19 @@
                 // Check for images
                 $myImage = "";
                 $has_image = 0;
+                $is_cover_image = 0;
+                $is_profile_image = 0;
 
-                if(!empty($files['file']['name'])) {
+                if(isset($data['is_profile_image']) || isset($data['is_cover_image'])) {
+                    $myImage = $files;
+                    $has_image = 1;
+
+                    if(isset($data['is_cover_image'])) {
+                        $is_cover_image = 1;
+                    } else if(isset($data['is_profile_image'])) {
+                        $is_profile_image = 1;
+                    }
+                }else if(!empty($files['file']['name'])) {
                     // Move image into the uploads folder
                     $folder = "uploads/" . $user_id . "/";
 
@@ -36,10 +47,15 @@
                     $has_image = 1;
                 }
                 
-                $post = addslashes($data['post']);
+                // Checking that post has data
+                $post = "";
+                if(isset($data['post'])) {
+                    $post = addslashes($data['post']);
+                }
+
                 $post_id = $this->create_post_id();
 
-                $query = "insert into posts (user_id, post_id, post, has_image, image) values ('$user_id', '$post_id', '$post', '$has_image', '$myImage')";
+                $query = "insert into posts (user_id, post_id, post, has_image, is_profile_image, is_cover_image, image) values ('$user_id', '$post_id', '$post', '$has_image', '$is_profile_image', '$is_cover_image', '$myImage')";
 
                 $DB = new Database();
                 $DB->save($query);
