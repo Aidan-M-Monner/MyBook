@@ -59,15 +59,16 @@
                             $query = "update users set profile_image = '$filename' where user_id = '$user_id' limit 1";
                             $_POST['is_profile_image'] = 1;
                         }
-
+        
                         $DB = new Database();
                         $DB->save($query);
 
                         // Create a post
                         $post = new Post();
-                        $result = $post->create_post($user_id, $_POST, $_FILES);
+                        $post->create_post($user_id, $_POST, $filename);
         
                         header("Location: profile.php");
+                        die;
                     }
                 } else {
                     echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";

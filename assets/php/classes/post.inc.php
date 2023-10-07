@@ -4,7 +4,8 @@
 
         // --------- Create Posts --------- //
         public function create_post($user_id, $data, $files) {
-            if(!empty($data['post']) || !empty($files['file']['name'])) {
+            if(!empty($data['post']) || !empty($files['file']['name']) || isset($data['is_profile_image']) || isset($data['is_cover_image'])) {
+                print_r("Second <br>");
                 // Check for images
                 $myImage = "";
                 $has_image = 0;
@@ -15,39 +16,43 @@
                     $myImage = $files;
                     $has_image = 1;
 
-                    if(isset($data['is_cover_image'])) {
-                        $is_cover_image = 1;
-                    } else if(isset($data['is_profile_image'])) {
+                    if(isset($data['is_profile_image'])) {
                         $is_profile_image = 1;
-                    }
-                }else if(!empty($files['file']['name'])) {
-                    // Move image into the uploads folder
-                    $folder = "uploads/" . $user_id . "/";
-
-                    // Create Folder
-                    if(!file_exists($folder)) {
-                        mkdir($folder, 0777, true);
+                    } else if(isset($data['is_cover_image'])) {
+                        $is_cover_image = 1;
                     }
 
-                    // Variables
-                    $image_class = new Image();
-                    $file_type = $_FILES['file']['type'];
+                } else {
 
-                    // Check out file extension
-                    if($file_type == 'image/png') {
-                        $myImage = $folder . $image_class->generate_filename(15) . ".png";
-                    } else if ($file_type == 'image/jpg' || $file_type == 'image/jpeg') {
-                        $myImage = $folder . $image_class->generate_filename(15) . ".jpg";
+                    if(!empty($files['file']['name'])) {
+                        // Move image into the uploads folder
+                        $folder = "uploads/" . $user_id . "/posts/";
+
+                        // Create Folder
+                        if(!file_exists($folder)) {
+                            mkdir($folder, 0777, true);
+                        }
+
+                        // Variables
+                        $image_class = new Image();
+                        $file_type = $_FILES['file']['type'];
+
+                        // Check out file extension
+                        if($file_type == 'image/png') {
+                            $myImage = $folder . $image_class->generate_filename(15) . ".png";
+                        } else if ($file_type == 'image/jpg' || $file_type == 'image/jpeg') {
+                            $myImage = $folder . $image_class->generate_filename(15) . ".jpg";
+                        }
+
+                        move_uploaded_file($_FILES['file']['tmp_name'], $myImage);
+
+                        $image_class->resize_image($file_type, $myImage, $myImage, 1500, 1500);
+
+                        $has_image = 1;
                     }
-
-                    move_uploaded_file($_FILES['file']['tmp_name'], $myImage);
-
-                    $image_class->resize_image($file_type, $myImage, $myImage, 1500, 1500);
-
-                    $has_image = 1;
                 }
                 
-                // Checking that post has data
+                // Ensure post is set.
                 $post = "";
                 if(isset($data['post'])) {
                     $post = addslashes($data['post']);
