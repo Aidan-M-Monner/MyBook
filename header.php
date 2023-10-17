@@ -3,8 +3,8 @@
         <a href="timeline.php" class="class-a">MyBook</a> &nbsp; &nbsp;
         <input type="text" placeholder="Search for people..." class="class-3">
 
-        <a href="profile.php">
-            <img src="<?php echo $image; ?>" class="class-4"/>
+        <a href="profile.php?id=<?php echo $user_id; ?>">
+            <img src="<?php echo $user_image; ?>" class="class-4"/>
         </a>
         
         <a href="logout.php">

@@ -45,7 +45,6 @@
                         }
 
                         move_uploaded_file($_FILES['file']['tmp_name'], $myImage);
-
                         $image_class->resize_image($file_type, $myImage, $myImage, 1500, 1500);
 
                         $has_image = 1;

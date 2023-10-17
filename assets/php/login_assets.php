@@ -18,7 +18,7 @@
             echo $result;
             echo "</div>";
         } else {
-            header("Location: profile.php");
+            header("Location: profile.php?id=" . $row['user_id']);
             die;
         }
 

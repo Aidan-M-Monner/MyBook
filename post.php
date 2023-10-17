@@ -23,7 +23,7 @@
     $image_class = new Image();
     $post_image = $ROW['image'];
     if(file_exists($post_image)) {
-        $ext = pathinfo($cover, PATHINFO_EXTENSION);
+        $ext = pathinfo($post_image, PATHINFO_EXTENSION);
         if($ext == 'jpg' || $ext == "jpeg") {
             $ext = 'image/jpeg';
         } else if ($ext == 'png') {

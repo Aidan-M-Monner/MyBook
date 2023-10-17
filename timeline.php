@@ -1,7 +1,6 @@
 <?php
     session_start();
     include("assets/php/common_assets.php");
-    //test
 ?>
 
 <html>

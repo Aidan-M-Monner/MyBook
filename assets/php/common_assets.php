@@ -4,20 +4,22 @@
     include("classes/image.php");
     include("classes/login.inc.php"); 
     include("classes/post.inc.php"); 
+    include("classes/profile.inc.php"); 
     include("classes/user.inc.php");
 
     // --------- Check user logged in --------- //
     $login = new Login();
     $user_data = $login->check_login($_SESSION['mybook_user_id']);
 
-    // --------- User Profile Variables --------- //
-    $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
+    // --------- User ID --------- //
+    $user_id = $user_data['user_id'];
 
-    $image = "";
+    // --------- User Profile Image --------- //
+    $user_image = "";
     $image_class = new Image();
     if(file_exists($user_data['profile_image'])) {
-        $image = $user_data['profile_image'];
-        $ext = pathinfo($image, PATHINFO_EXTENSION);
+        $user_image = $user_data['profile_image'];
+        $ext = pathinfo($user_image, PATHINFO_EXTENSION);
 
         if($ext == 'jpg' || $ext == "jpeg") {
             $ext = 'image/jpeg';
@@ -25,9 +27,9 @@
             $ext = 'image/png';
         }
 
-        $image = $image_class->get_thumbnail_profile($user_data['profile_image'], $ext);
+        $user_image = $image_class->get_thumbnail_profile($user_data['profile_image'], $ext);
     } else if ($user_data['gender'] == "Male") {
-        $image = "assets/img/male-icon.png";
+        $user_image = "assets/img/male-icon.png";
     } else if ($user_data['gender'] == "Female") {
-        $image = "assets/img/female-icon.png";
+        $user_image = "assets/img/female-icon.png";
     }

@@ -1,4 +1,33 @@
 <?php 
+    $profile = new Profile();
+    $profile_data = $profile->get_profile($_GET['id']);
+
+    if(is_array($profile_data)) {
+        $user_data = $profile_data[0];
+    }
+
+    // --------- User Profile Variables --------- //
+    $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
+
+    $image = "";
+    $image_class = new Image();
+    if(file_exists($user_data['profile_image'])) {
+        $image = $user_data['profile_image'];
+        $ext = pathinfo($image, PATHINFO_EXTENSION);
+
+        if($ext == 'jpg' || $ext == "jpeg") {
+            $ext = 'image/jpeg';
+        } else if ($ext == 'png') {
+            $ext = 'image/png';
+        }
+
+        $image = $image_class->get_thumbnail_profile($user_data['profile_image'], $ext);
+    } else if ($user_data['gender'] == "Male") {
+        $image = "assets/img/male-icon.png";
+    } else if ($user_data['gender'] == "Female") {
+        $image = "assets/img/female-icon.png";
+    }
+    
     // --------- Cover Image Section --------- //
     $cover = "assets/img/mountain.jpg";
     if(file_exists($user_data['cover_image'])) {
@@ -34,7 +63,7 @@
 
     // --------- Posts Section --------- //
     $post = new Post();
-    $id = $_SESSION['mybook_user_id'];
+    $id = $user_data['user_id'];
     $posts = $post->get_posts($id);
 
     // --------- Friends Section --------- //

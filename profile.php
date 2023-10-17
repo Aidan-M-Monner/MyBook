@@ -2,6 +2,11 @@
     session_start();
     include("assets/php/common_assets.php");
     include("assets/php/profile_assets.php");
+
+    $user_page = false;
+    if($user_id == $user_data['user_id']) {
+        $user_page = true;
+    }
 ?>
 
 <html>
@@ -18,10 +23,12 @@
             <div class="class-6">
                 <img src="<?php echo $cover; ?>" class="class-7"/>
                 <img src="<?php echo $image; ?>" class="class-8"/><br>
-                <div class="class-c"> 
-                    <a href="change_profile_image.php?change=profile" class="class-d">Change Image</a> | 
-                    <a href="change_profile_image.php?change=cover" class="class-d">Change Cover</a>
-                </div>
+                <?php if($user_page) { ?>
+                    <div class="class-c"> 
+                        <a href="change_profile_image.php?change=profile" class="class-d">Change Image</a> | 
+                        <a href="change_profile_image.php?change=cover" class="class-d">Change Cover</a>
+                    </div>
+                <?php } ?>
                 <div class="class-9"><?php echo $full_name ?></div><br>
                 <a href="timeline.php"><div class="class-10">Timeline</div></a>
                 <div class="class-10">About</div> 
