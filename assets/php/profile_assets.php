@@ -1,9 +1,12 @@
 <?php 
-    $profile = new Profile();
-    $profile_data = $profile->get_profile($_GET['id']);
+    // --------- Grabbing Another User's Account --------- //
+    if(isset($_GET['id']) && is_numeric($_GET['id'])){ // White/Black list values that do not exist or are numbers.
+        $profile = new Profile();
+        $profile_data = $profile->get_profile($_GET['id']);
 
-    if(is_array($profile_data)) {
-        $user_data = $profile_data[0];
+        if(is_array($profile_data)) {
+            $user_data = $profile_data[0];
+        }
     }
 
     // --------- User Profile Variables --------- //

@@ -3,6 +3,7 @@
     include("assets/php/common_assets.php");
     include("assets/php/profile_assets.php");
 
+    // --------- Is User's Page? --------- //
     $user_page = false;
     if($user_id == $user_data['user_id']) {
         $user_page = true;

@@ -57,7 +57,7 @@
         </div>
         <?php
             if(!$poster_post == "") {
-                echo $poster_post . "<br><br>";
+                echo htmlspecialchars($poster_post) . "<br><br>";
             }
         ?>
         <?php 
