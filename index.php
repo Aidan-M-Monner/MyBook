@@ -31,7 +31,7 @@
                     </div>
                 <?php } ?>
                 <div class="class-9"><?php echo $full_name ?></div><br>
-                <a href="timeline.php?id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Timeline</div></a>
+                <a href="timeline.php"><div class="class-10">Timeline</div></a>
                 <div class="class-10">About</div> 
                 <div class="class-10">Friends</div> 
                 <div class="class-10">Photos</div> 

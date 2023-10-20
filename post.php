@@ -68,6 +68,9 @@
         <a href="#">Like</a> . 
         <a href="#">Comment</a> . 
         <span class="class-24"><?php echo $ROW['date']; ?></span> 
-        <span style="color: #999; float: right;">Edit . Delete</span>
+        <span style="color: #999; float: right;">
+            <a href="edit.php">Edit</a> . 
+            <a href="delete.php?id=<?php echo $ROW['post_id']; ?>">Delete</a>
+        </span>
     </div>
 </div>

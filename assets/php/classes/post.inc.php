@@ -31,6 +31,7 @@
                         // Create Folder
                         if(!file_exists($folder)) {
                             mkdir($folder, 0777, true);
+                            file_put_content($folder . "index.php", ""); // Creates index to keep users from seeing content.
                         }
 
                         // Variables
@@ -78,6 +79,24 @@
 
             if($result) {
                 return $result;
+            } else {
+                return false;
+            }
+        }
+
+        // --------- Grabbing Singular Post --------- //
+        public function get_post($post_id) {
+            if(!is_numeric($post_id)) {
+                return false; // stops function if user tries to input non-numeric characters, improving security.
+            }
+
+            $query = "select * from posts where post_id = '$post_id' order by id desc limit 1";
+
+            $DB = new Database();
+            $result = $DB->read($query);
+
+            if($result) {
+                return $result[0];
             } else {
                 return false;
             }
