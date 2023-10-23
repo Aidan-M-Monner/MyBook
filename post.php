@@ -2,6 +2,7 @@
     // --------- General Poster Information --------- //
     $poster_name = $ROW_USER['first_name'] . " " . $ROW_USER['last_name'];
     $poster_post = $ROW['post'];
+    $post_id = $ROW['post_id'];
 
     // --------- Poster Profile Image --------- //
     $poster_image = "";
@@ -42,6 +43,12 @@
     } else if($ROW_USER['gender'] == 'Female') {
         $pronoun = "her";
     }
+
+    // --------- Check If Post User --------- //
+    $user_post = false;
+    if($user_id == $ROW['user_id']) {
+        $user_post = true;
+    }
 ?>
 
 <div class="class-21">
@@ -69,13 +76,13 @@
                 echo "<img src='$post_image' style='width: 300px; height: 300px;'/><br><br>";
             }
         ?>
-        <a href="#">Like</a> . 
+        <a href="like.php?type=post&id=<?php echo $post_id; ?>">Like</a> . 
         <a href="#">Comment</a> . 
         <span class="class-24"><?php echo $ROW['date']; ?></span> 
-        <?php if($user_page) { ?>
+        <?php if($user_post) { ?>
             <span style="color: #999; float: right;">
                 <a href="edit.php">Edit</a> . 
-                <a href="delete.php?id=<?php echo $ROW['post_id']; ?>">Delete</a>
+                <a href="delete.php?id=<?php echo $post_id; ?>">Delete</a>
             </span>
         <?php } ?>
     </div>
