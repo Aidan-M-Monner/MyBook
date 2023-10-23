@@ -15,7 +15,7 @@
                     // Create Folder
                     if(!file_exists($folder)) {
                         mkdir($folder, 0777, true);
-                        file_put_content($folder . "index.php", ""); // Creates index to keep users from seeing content.
+                        file_put_contents($folder . "index.php", ""); // Creates index to keep users from seeing content.
                     }
 
                     $image = new Image();

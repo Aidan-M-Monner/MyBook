@@ -5,15 +5,26 @@
     // --------- Collect User Post --------- //
     $ERROR = "";
     $DB = new Database();
+    $Post = new Post();
     if(isset($_GET['id'])) {
-        $Post = new Post();
-        $row = $Post->get_post($_GET['id']);
+        $ROW = $Post->get_post($_GET['id']);
 
-        if(!$row) {
+        if(!$ROW) {
+            $ERROR = "No such post was found!";
+        }
+
+        if($user_id != $ROW['user_id']) {
             $ERROR = "No such post was found!";
         }
     } else {
         $ERROR = "No such post was found!";
+    }
+
+    // --------- If Something Was Posted --------- //
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+        $Post->delete_post($_POST['post_id']);
+        header("Location: profile.php?id=<?php echo $user_id; ?>");
+        die;
     }
 ?>
 
@@ -33,11 +44,23 @@
                 <!----------------- Deleting Post Area ---------------------> 
                 <div class="class-13">
                     <div class="class-17">
-                        <h2>Delete Post</h2><br>
                         <form method="post">
-                            <span> Are You Sure you want to delete this post? </span><br>
-                            <hr><?php echo htmlspecialchars($row['post']); ?><hr>
-                            <input type="submit" value="Delete" class="class-19"/><br><br>
+                            <span> Are You Sure you want to delete this post? </span><br><br>
+                            <div style="border: solid thin #AAA;">
+                                <?php 
+                                    if($ERROR != "") { 
+                                        echo "<div style='padding: 5px;'>" . $ERROR . "</div>"; 
+                                    } else {
+                                        $user = new User();
+                                        $ROW_USER = $user->get_user($ROW['user_id']);
+                                        include("post_delete.php");
+                                    }
+                                ?>
+                            </div>
+                            <div style="padding-bottom: 5px; padding-top: 5px;">
+                            <input type="hidden" name="post_id" value="<?php echo $ROW['post_id'] ?>">
+                                <input type="submit" value="Delete" class="class-19"/>
+                            </div>
                         </form>
                     </div>
                 </div>

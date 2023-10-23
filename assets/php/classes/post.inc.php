@@ -31,7 +31,7 @@
                         // Create Folder
                         if(!file_exists($folder)) {
                             mkdir($folder, 0777, true);
-                            file_put_content($folder . "index.php", ""); // Creates index to keep users from seeing content.
+                            file_put_contents($folder . "index.php", ""); // Creates index to keep users from seeing content.
                         }
 
                         // Variables
@@ -90,7 +90,7 @@
                 return false; // stops function if user tries to input non-numeric characters, improving security.
             }
 
-            $query = "select * from posts where post_id = '$post_id' order by id desc limit 1";
+            $query = "select * from posts where post_id = '$post_id' limit 1";
 
             $DB = new Database();
             $result = $DB->read($query);
@@ -100,6 +100,18 @@
             } else {
                 return false;
             }
+        }
+
+        // --------- Deleting Post --------- //
+        public function delete_post($post_id) {
+            if(!is_numeric($post_id)) {
+                return false; // stops function if user tries to input non-numeric characters, improving security.
+            }
+
+            $query = "delete from posts where post_id = '$post_id' limit 1";
+
+            $DB = new Database();
+            $DB->save($query);
         }
 
         // --------- Creating a Post ID --------- //

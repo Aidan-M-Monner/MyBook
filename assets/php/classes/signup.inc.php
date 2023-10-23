@@ -62,7 +62,7 @@
             $last_name = ucfirst($data['last_name']);
             $gender = $data['gender'];
             $email = $data['email'];
-            $password = $data['password'];
+            $password = hash("sha1", $data['password']);
 
             // PHP Created Variables
             $user_id = $this->create_user_id();

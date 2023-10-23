@@ -1,9 +1,7 @@
 <?php
-    // --------- General Poster Information --------- //
     $poster_name = $ROW_USER['first_name'] . " " . $ROW_USER['last_name'];
     $poster_post = $ROW['post'];
 
-    // --------- Poster Profile Image --------- //
     $poster_image = "";
     if(file_exists($ROW_USER['profile_image'])) {
         $poster_image = $ROW_USER['profile_image'];
@@ -22,7 +20,6 @@
         $poster_image = "assets/img/female-icon.png";
     }
 
-    // --------- Post Image --------- //
     $image_class = new Image();
     $post_image = $ROW['image'];
     if(file_exists($post_image)) {
@@ -35,7 +32,6 @@
         $post_image = $image_class->get_thumbnail_post($post_image, $ext);
     }
 
-    // --------- Poster Gender --------- //
     $pronoun = "";
     if($ROW_USER['gender'] == 'Male') {
         $pronoun = "his";
@@ -69,14 +65,5 @@
                 echo "<img src='$post_image' style='width: 300px; height: 300px;'/><br><br>";
             }
         ?>
-        <a href="#">Like</a> . 
-        <a href="#">Comment</a> . 
-        <span class="class-24"><?php echo $ROW['date']; ?></span> 
-        <?php if($user_page) { ?>
-            <span style="color: #999; float: right;">
-                <a href="edit.php">Edit</a> . 
-                <a href="delete.php?id=<?php echo $ROW['post_id']; ?>">Delete</a>
-            </span>
-        <?php } ?>
     </div>
 </div>
