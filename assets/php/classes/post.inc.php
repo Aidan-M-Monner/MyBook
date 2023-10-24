@@ -114,6 +114,48 @@
             $DB->save($query);
         }
 
+        // --------- Like Post --------- //
+        public function like_post($id, $type, $user_id) {
+            $DB = new Database();
+            if($type = "post") {
+                // Increment the Posts table
+                $sql = "update posts set likes = likes + 1 where post_id = '$id' limit 1";
+                $DB->save($sql);
+
+                // Save likes details
+                $sql = "select likes from likes where type = 'post' && content_id = '$id' limit 1";
+                $result = $DB->read($sql);
+
+                if(is_array($result)) {
+                    // User/like data
+                    $likes = json_decode($result[0]['likes'], true); // true prevents $likes from being an object rather than an array.
+                    $user_ids = array_column($likes, "user_id");
+
+                    if(!in_array($user_id, $user_ids)) {
+                        $arr['user_id'] = $user_id;
+                        $arr['date'] = date("Y-m-d H:i:s");
+
+                        $likes[] = $arr;
+                        $likes_string = json_encode($likes);
+
+                        // Save user/like data
+                        $sql = "update likes set likes = '$likes_string' where type='post' && content_id = '$id' limit 1";
+                        $result = $DB->save($sql);
+                    }
+                } else {
+                    // User/like data
+                    $arr['user_id'] = $user_id;
+                    $arr['date'] = date("Y-m-d H:i:s");
+                    $arr2[] = $arr;
+                    $likes = json_encode($arr2);
+
+                    // Save user/like data
+                    $sql = "insert into likes (type, content_id, likes) values ('$type', '$id', '$likes')";
+                    $result = $DB->save($sql);
+                }
+            }
+        }
+
         // --------- Creating a Post ID --------- //
         private function create_post_id() {
             $length = rand(4, 19);

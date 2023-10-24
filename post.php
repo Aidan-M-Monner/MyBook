@@ -76,7 +76,7 @@
                 echo "<img src='$post_image' style='width: 300px; height: 300px;'/><br><br>";
             }
         ?>
-        <a href="like.php?type=post&id=<?php echo $post_id; ?>">Like</a> . 
+        <a href="like.php?type=post&id=<?php echo $post_id; ?>">Like (<?php echo $ROW['likes']; ?>)</a> . 
         <a href="#">Comment</a> . 
         <span class="class-24"><?php echo $ROW['date']; ?></span> 
         <?php if($user_post) { ?>
