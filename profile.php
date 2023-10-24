@@ -65,7 +65,7 @@
                     </div>
 
                 <!----------------- Posts Area ---------------------> 
-                    <div class="class-20">
+                    <div class="class-20" style="background-color: #CDCDCD;">
                         <?php
                             if($posts) {
                                 foreach($posts as $ROW) {

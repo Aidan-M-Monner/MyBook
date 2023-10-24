@@ -25,6 +25,6 @@
 <div class="class-15">
     <a href="profile.php?id=<?php echo $FRIEND_ROW['user_id']; ?>" style="text-decoration: none;">
         <img src="<?php echo $friend_image; ?>" class="class-16"/><br>
-        <span style="float: left;"><?php echo $friend_name; ?></span>
+        <span style="float:left;"><?php echo $friend_name; ?></span>
     </a>
 </div>

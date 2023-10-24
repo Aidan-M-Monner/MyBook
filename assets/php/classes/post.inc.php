@@ -118,9 +118,6 @@
         public function like_post($id, $type, $user_id) {
             $DB = new Database();
             if($type = "post") {
-                // Increment the Posts table
-                $sql = "update posts set likes = likes + 1 where post_id = '$id' limit 1";
-                $DB->save($sql);
 
                 // Save likes details
                 $sql = "select likes from likes where type = 'post' && content_id = '$id' limit 1";
@@ -141,6 +138,22 @@
                         // Save user/like data
                         $sql = "update likes set likes = '$likes_string' where type='post' && content_id = '$id' limit 1";
                         $result = $DB->save($sql);
+
+                        // Increment the Posts table
+                        $sql = "update posts set likes = likes + 1 where post_id = '$id' limit 1";
+                        $DB->save($sql);
+                    } else {
+                        $key = array_search($user_id, $user_ids); // Find array key with user
+                        unset($likes[$key]); //Removes user once like is clicked again. They can unlike.
+                        $likes_string = json_encode($likes);
+
+                        // Save user/unlike data
+                        $sql = "update likes set likes = '$likes_string' where type='post' && content_id = '$id' limit 1";
+                        $result = $DB->save($sql);
+
+                        // Decrement the Posts table
+                        $sql = "update posts set likes = likes - 1 where post_id = '$id' limit 1";
+                        $DB->save($sql);
                     }
                 } else {
                     // User/like data
@@ -152,8 +165,36 @@
                     // Save user/like data
                     $sql = "insert into likes (type, content_id, likes) values ('$type', '$id', '$likes')";
                     $result = $DB->save($sql);
+
+                    // Increment the Posts table
+                    $sql = "update posts set likes = likes + 1 where post_id = '$id' limit 1";
+                    $DB->save($sql);
                 }
             }
+        }
+
+        // --------- Get Likes --------- //
+        public function get_likes($id, $type) {
+            $DB = new Database();
+            if($type == "post" && is_numeric($id)) {
+                // Get like details
+                $sql = "select likes from likes where type = 'post' && content_id = '$id' limit 1";
+                $result = $DB->read($sql);
+
+                if(is_array($result)) {
+                    // User/like data
+                    $likes = json_decode($result[0]['likes'], true); // true prevents $likes from being an object rather than an array.
+                    return $likes;
+                }
+            }
+
+            return false;
+        }
+
+        // --------- Like Amount --------- //
+        public function like_amount($likes) {
+            $like_amount = ($likes > 1) ? $likes . " people liked this post" : $likes . " person liked this post";
+            return $like_amount;
         }
 
         // --------- Creating a Post ID --------- //

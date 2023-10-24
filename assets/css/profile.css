@@ -157,12 +157,13 @@ body {
 
 /*----------------- Posts Area ---------------------*/
 .class-20 {
-    background-color: #FFF;
+    background-color: #CDCDCD;
     margin-top: 20px;
     padding: 10px;
 }
 
 .class-21 {
+    background-color: #FFF;
     display: flex;
     font-size: 13px;
     margin-bottom: 20px;
