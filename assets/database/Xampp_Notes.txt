@@ -13,3 +13,6 @@ $DB = new Database();
         $DB->save($sql);
     }
     die;
+
+// ------------ Setting likes to 0 for all users ------------ //
+update users set likes = 0 id >= 0

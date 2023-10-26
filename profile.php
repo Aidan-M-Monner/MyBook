@@ -37,28 +37,31 @@
             <div class="class-6">
                 <img src="<?php echo $cover; ?>" class="class-7"/>
                 <img src="<?php echo $image; ?>" class="class-8"/><br>
+                <?php if(!$user_page) { ?>
                 <div style="text-align: right; width:100%;">
                     <a href="like.php?type=user&id=<?php echo $user_data['user_id'] ?>">
                         <input id="post_button" type="submit" value="<?php echo $user_follow; ?>" class="class-e">
                     </a>
                 </div>
+                <?php } ?>
                 <?php if($user_page) { ?>
                     <div class="class-c"> 
                         <a href="change_profile_image.php?change=profile" class="class-d">Change Image</a> | 
                         <a href="change_profile_image.php?change=cover" class="class-d">Change Cover</a>
                     </div>
                 <?php } ?>
-                <div class="class-9"><?php echo $full_name ?></div>
+                <div class="class-9"><a href="profile.php?id=<?php echo $user_data['user_id'] ?>" style="text-decoration: none;"><?php echo $full_name ?></a></div>
                 <div style="font-size: 12px;">
                     <a href="likes.php?type=user&id=<?php echo $user_data['user_id']; ?>" style="text-decoration: none;">
                         <?php echo $user_followers; ?>
                     </a>
                 </div><br>
-                <a href="timeline.php?id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Timeline</div></a>
-                <div class="class-10">About</div> 
-                <div class="class-10">Friends</div> 
-                <div class="class-10">Photos</div> 
-                <div class="class-10">Settings</div>
+                <a href="index.php?id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Timeline</div></a>
+                <a href="profile.php?section=about&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">About</div></a>
+                <a href="profile.php?section=following&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Friends</div></a>
+                <a href="profile.php?section=followers&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Followers</div></a>
+                <a href="profile.php?section=photos&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Photos</div></a>
+                <a href="profile.php?section=settings"><div class="class-10">Settings</div></a>
             </div>
 
             <!----------------- Below Cover Area ---------------------> 
@@ -70,6 +73,8 @@
 
                 if($section == "default") {
                     include("profile_content_default.php");
+                } elseif($section == "followers") {
+                    include("profile_content_followers.php");
                 } elseif($section == "photos") {
                     include("profile_content_photos.php");
                 }
