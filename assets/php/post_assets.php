@@ -51,6 +51,12 @@
         $user_post = true;
     }
 
+    // --------- Check If Post User --------- //
+    $update_post = false;
+    if($ROW['is_profile_image'] == 1 || $ROW['is_cover_image'] == 1) {
+        $update_post = true;
+    }
+
     // --------- Check for likes --------- //
     $likes = "";
     $likes = ($post_likes > 0) ? "s(".$post_likes.")" : "";

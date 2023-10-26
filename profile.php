@@ -18,19 +18,42 @@
     <body>
         <!----------------- Top Bar ---------------------> 
         <?php include("header.php"); ?>
+        <style>
+            .class-e {
+                background-color: #405D9B;
+                border: none;
+                border-radius: 2px;
+                color: #FFF;
+                cursor: pointer;
+                font-size: 14px;
+                margin-right: 10px;
+                min-width: 50px;
+                padding: 4px;
+            }
+        </style>
 
         <!----------------- Cover Area ---------------------> 
         <div class="class-5">
             <div class="class-6">
                 <img src="<?php echo $cover; ?>" class="class-7"/>
                 <img src="<?php echo $image; ?>" class="class-8"/><br>
+                <div style="text-align: right; width:100%;">
+                    <a href="like.php?type=user&id=<?php echo $user_data['user_id'] ?>">
+                        <input id="post_button" type="submit" value="<?php echo $user_follow; ?>" class="class-e">
+                    </a>
+                </div>
                 <?php if($user_page) { ?>
                     <div class="class-c"> 
                         <a href="change_profile_image.php?change=profile" class="class-d">Change Image</a> | 
                         <a href="change_profile_image.php?change=cover" class="class-d">Change Cover</a>
                     </div>
                 <?php } ?>
-                <div class="class-9"><?php echo $full_name ?></div><br>
+                <div class="class-9"><?php echo $full_name ?></div>
+                <div style="font-size: 12px;">
+                    <a href="likes.php?type=user&id=<?php echo $user_data['user_id']; ?>" style="text-decoration: none;">
+                        <?php echo $user_followers; ?>
+                    </a>
+                </div><br>
                 <a href="timeline.php?id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Timeline</div></a>
                 <div class="class-10">About</div> 
                 <div class="class-10">Friends</div> 
@@ -39,45 +62,18 @@
             </div>
 
             <!----------------- Below Cover Area ---------------------> 
-            <div class="class-11">
-                <!----------------- Friends Area ---------------------> 
-                <div class="class-12">
-                    <div class="class-14">
-                        Friends <br>
-                        <?php
-                            if($friends) {
-                                foreach($friends as $FRIEND_ROW) {
-                                    include("user.php");
-                                }
-                            }
-                        ?>
-                    </div>
-                </div>
+            <?php 
+                $section = "default";
+                if(isset($_GET['section'])) {
+                    $section = $_GET['section'];
+                }
 
-                <!----------------- Posting Area ---------------------> 
-                <div class="class-13">
-                    <div class="class-17">
-                        <form method="post" enctype="multipart/form-data">
-                            <textarea placeholder="What's on your mind?" class="class-18" name="post"></textarea>
-                            <input type="file" name="file"/>
-                            <input type="submit" value="Post" class="class-19"/><br><br>
-                        </form>
-                    </div>
-
-                <!----------------- Posts Area ---------------------> 
-                    <div class="class-20" style="background-color: #CDCDCD;">
-                        <?php
-                            if($posts) {
-                                foreach($posts as $ROW) {
-                                    $user = new User();
-                                    $ROW_USER = $user->get_user($ROW['user_id']);
-                                    include("post.php");
-                                }
-                            }
-                        ?>
-                    </div>
-                </div>
-            </div>
+                if($section == "default") {
+                    include("profile_content_default.php");
+                } elseif($section == "photos") {
+                    include("profile_content_photos.php");
+                }
+            ?>
         </div>
     </body>
 </html>

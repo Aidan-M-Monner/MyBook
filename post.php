@@ -43,7 +43,9 @@
             <span class="class-24"><?php echo $ROW['date']; ?></span> 
             <?php if($user_post) { ?>
                 <span style="color: #999; float: right;">
-                    <a href="edit.php" style="text-decoration: none;">Edit</a> . 
+                    <?php if(!$update_post) { ?>
+                        <a href="edit.php?id=<?php echo $post_id; ?>" style="text-decoration: none;">Edit</a> . 
+                    <?php } ?>
                     <a href="delete.php?id=<?php echo $post_id; ?>" style="text-decoration: none;">Delete</a>
                 </span>
             <?php } ?>

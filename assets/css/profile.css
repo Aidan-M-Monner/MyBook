@@ -79,6 +79,18 @@ body {
     text-decoration: none;
 }
 
+.class-e {
+    background-color: #405D9B;
+    border: none;
+    border-radius: 2px;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    min-width: 50px;
+    padding: 4px;
+}
+
 .class-9 {
     font-size: 20px;
 }
@@ -150,8 +162,10 @@ body {
     border: none;
     border-radius: 2px;
     color: #FFF;
+    cursor: pointer;
     font-size: 14px;
     float: right;
+    min-width: 50px;
     padding: 4px;
 }
 
