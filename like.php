@@ -15,8 +15,14 @@
             $allowed = ['post', 'user', 'comment']; // Whitelist what types of posts can be liked.
 
             if(in_array($_GET['type'], $allowed)) {
-                $post = new Post();
-                $post->like_post($_GET['id'], $_GET['type'], $user_id);
+                $post_class = new Post();
+                $user_class = new User();
+
+                $post_class->like_post($_GET['id'], $_GET['type'], $user_id);
+
+                if($_GET['type'] == "user") {
+                    $user_class->follow_user($_GET['id'], $_GET['type'], $user_id);
+                }
             }
         }
     }

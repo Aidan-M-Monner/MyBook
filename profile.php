@@ -58,7 +58,7 @@
                 </div><br>
                 <a href="index.php?id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Timeline</div></a>
                 <a href="profile.php?section=about&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">About</div></a>
-                <a href="profile.php?section=following&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Friends</div></a>
+                <a href="profile.php?section=following&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Following</div></a>
                 <a href="profile.php?section=followers&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Followers</div></a>
                 <a href="profile.php?section=photos&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Photos</div></a>
                 <a href="profile.php?section=settings"><div class="class-10">Settings</div></a>
@@ -73,9 +73,11 @@
 
                 if($section == "default") {
                     include("profile_content_default.php");
-                } elseif($section == "followers") {
+                } else if($section == "following") {
+                    include("profile_content_following.php");
+                } else if($section == "followers") {
                     include("profile_content_followers.php");
-                } elseif($section == "photos") {
+                } else if($section == "photos") {
                     include("profile_content_photos.php");
                 }
             ?>

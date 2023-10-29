@@ -229,6 +229,8 @@
         // --------- Get Likes --------- //
         public function get_likes($id, $type) {
             $DB = new Database();
+            $type = addslashes($type);
+            
             if(is_numeric($id)) {
                 // Get like details
                 $sql = "select likes from likes where type = '$type' && content_id = '$id' limit 1";

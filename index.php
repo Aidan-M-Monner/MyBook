@@ -2,16 +2,6 @@
     session_start();
     include("assets/php/common_assets.php");
 
-    // --------- Grabbing Another User's Account --------- //
-    if(isset($_GET['id']) && is_numeric($_GET['id'])){ // White/Black list values that do not exist or are numbers.
-        $profile = new Profile();
-        $profile_data = $profile->get_profile($_GET['id']);
-
-        if(is_array($profile_data)) {
-            $user_data = $profile_data[0];
-        }
-    }
-
     // --------- User Profile Variables --------- //
     $full_name = $user_data['first_name'] . " " . $user_data['last_name'];
 
@@ -32,6 +22,24 @@
         $image = "assets/img/male-icon.png";
     } else if ($user_data['gender'] == "Female") {
         $image = "assets/img/female-icon.png";
+    }
+
+    // --------- Posting Section --------- //
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+        $post = new Post();
+        $id = $_SESSION['mybook_user_id'];
+        $result = $post->create_post($id, $_POST, $_FILES);
+
+        // Ensure that data cannot be sent again when page refreshes.
+        if($result == "") {
+            header("Location: index.php");
+            die;
+        } else {
+            echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
+            echo "<br>The following errors occured: <br><br>";
+            echo $result;
+            echo "</div>";
+        }
     }
 ?>
 
@@ -58,41 +66,42 @@
                 <!----------------- Posting Area ---------------------> 
                 <div class="class-13">
                     <div class="class-17">
-                        <textarea placeholder="What's on your mind?" class="class-18"></textarea>
-                        <input type="submit" value="Post" class="class-19"/><br><br>
+                        <form method="post" enctype="multipart/form-data">
+                            <textarea placeholder="What's on your mind?" class="class-18" name="post"></textarea>
+                            <input type="file" name="file"/>
+                            <input type="submit" value="Post" class="class-19"/><br><br>
+                        </form>
                     </div>
 
-                <!----------------- Posts Area ---------------------> 
+                    <!----------------- Posts Area ---------------------> 
                     <div class="class-20">
-                        <div class="class-21">
-                            <div>
-                                <img src="assets/img/user1.jpg" class="class-22"/>
-                            </div>
-                            <div>
-                                <div class="class-23">First User</div>
-                                Finn Mertens[1] (also called Finn the Human, Pen in the original short, 
-                                and identified as P-G-8-7 Mertens[2]) is the main protagonist in Adventure Time. 
-                                He also appeared in the spin-off series Adventure Time: Distant Lands. He was voiced by Jeremy Shada in most appearances. 
-                                The character made his debut in the original pilot, where he is named "Pen" and voiced by Zack Shada, Jeremy's older brother. 
-                                Jonathan Frakes voices Finn as an adult in some appearances.
-                                <br><br>
-                                <a href="#">Like</a> . <a href="#">Comment</a> . <span class="class-24">August 30 2023</span>
-                            </div>
-                        </div>
+                        <?php
+                            $DB = new Database();
+                            $user_class = new User();
 
-                        <div class="class-21">
-                            <div>
-                                <img src="assets/img/user2.jpg" class="class-22"/>
-                            </div>
-                            <div>
-                                <div class="class-23">Second User</div>
-                                Jake (full title: Jacob "Jake" the Dog, Sr.[2]) is the deuteragonist of Adventure Time. 
-                                He is a dog/shape-shifter hybrid, referred to by others as a "magical dog," 
-                                and Finn's constant companion, best friend, and adoptive brother.
-                                <br><br>
-                                <a href="#">Like</a> . <a href="#">Comment</a> . <span class="class-24">August 30 2023</span>
-                            </div>
-                        </div>
+                            $followers = $user_class->get_following($user_id, "user");
+
+                            // --------- Grab Followed Posts --------- //
+                            $follower_ids = false;
+                            if(is_array($followers)) {
+                                $follower_ids = array_column($followers, "user_id");
+                                array_push($follower_ids, $user_id);
+                                $follower_ids = implode("','", $follower_ids);
+                            }
+                            if($follower_ids) {
+                                $sql = "select * from posts where user_id in('" . $follower_ids . "') order by date desc limit 30";
+                                $posts = $DB->read($sql);
+                            }
+
+                            // --------- All Posts --------- //
+                            if($posts) {
+                                foreach($posts as $ROW) {
+                                    $user = new User();
+                                    $ROW_USER = $user->get_user($ROW['user_id']);
+                                    include("post.php");
+                                }
+                            }
+                        ?>
                     </div>
                 </div>
             </div>

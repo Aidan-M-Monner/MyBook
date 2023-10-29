@@ -48,7 +48,7 @@
         $sql = "select likes from likes where type = 'user' && content_id = '$user_data[user_id]' limit 1";
         $result = $DB->read($sql);
 
-        if(is_array($result)) {
+        if(is_array($result) && $result[0]['likes'] != "") {
             // User/like data
             $array_follows = json_decode($result[0]['likes'], true); // true prevents $likes from being an object rather than an array.
             $user_ids = array_column($array_follows, "user_id");
