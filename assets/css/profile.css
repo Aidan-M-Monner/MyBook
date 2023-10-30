@@ -28,6 +28,16 @@ body {
     width: 400px;
 }
 
+.class-3-a {
+    border: solid thin grey;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 20px;
+    margin: 10px;
+    padding: 4px;
+    width: 100%;
+}
+
 .class-4 {
     float: right;
     width: 50px;

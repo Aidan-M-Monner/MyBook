@@ -33,7 +33,6 @@
 
                     // Make sure gender is male/female.
                     if($key == "gender") {
-                        echo $value;
                         if($value != 'Male' && $value != 'Female') {
                             $this->error = $this->error . " Please select either male or female. <br>";
                         }

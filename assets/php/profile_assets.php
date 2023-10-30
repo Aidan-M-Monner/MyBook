@@ -82,19 +82,24 @@
 
     // --------- Posting Section --------- //
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-        $post = new Post();
-        $id = $_SESSION['mybook_user_id'];
-        $result = $post->create_post($id, $_POST, $_FILES);
-
-        // Ensure that data cannot be sent again when page refreshes.
-        if($result == "") {
-            header("Location: profile.php");
-            die;
+        if(isset($_POST['first_name'])) {
+            $settings_class = new Settings();
+            $settings_class->save_settings($_POST);
         } else {
-            echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
-            echo "<br>The following errors occured: <br><br>";
-            echo $result;
-            echo "</div>";
+            $post = new Post();
+            $id = $_SESSION['mybook_user_id'];
+            $result = $post->create_post($id, $_POST, $_FILES);
+
+            // Ensure that data cannot be sent again when page refreshes.
+            if($result == "") {
+                header("Location: profile.php");
+                die;
+            } else {
+                echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
+                echo "<br>The following errors occured: <br><br>";
+                echo $result;
+                echo "</div>";
+            }
         }
     }
 

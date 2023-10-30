@@ -19,16 +19,14 @@
         <!----------------- Top Bar ---------------------> 
         <?php include("header.php"); ?>
         <style>
-            .class-e {
-                background-color: #405D9B;
-                border: none;
-                border-radius: 2px;
-                color: #FFF;
-                cursor: pointer;
+            .class-3-a {
+                border: solid thin grey;
+                border-radius: 5px;
                 font-size: 14px;
-                margin-right: 10px;
-                min-width: 50px;
+                height: 20px;
+                margin: 10px;
                 padding: 4px;
+                width: 100%;
             }
         </style>
 
@@ -61,7 +59,9 @@
                 <a href="profile.php?section=following&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Following</div></a>
                 <a href="profile.php?section=followers&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Followers</div></a>
                 <a href="profile.php?section=photos&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Photos</div></a>
-                <a href="profile.php?section=settings"><div class="class-10">Settings</div></a>
+                <?php if($user_page) { ?>
+                    <a href="profile.php?section=settings&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Settings</div></a>
+                <?php } ?>
             </div>
 
             <!----------------- Below Cover Area ---------------------> 
@@ -73,12 +73,16 @@
 
                 if($section == "default") {
                     include("profile_content_default.php");
+                } else if($section == "about") {
+                    include("profile_content_about.php");
                 } else if($section == "following") {
                     include("profile_content_following.php");
                 } else if($section == "followers") {
                     include("profile_content_followers.php");
                 } else if($section == "photos") {
                     include("profile_content_photos.php");
+                } else if($section == "settings") {
+                    include("profile_content_settings.php");
                 }
             ?>
         </div>

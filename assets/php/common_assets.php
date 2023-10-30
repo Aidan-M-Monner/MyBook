@@ -5,6 +5,7 @@
     include("classes/login.inc.php"); 
     include("classes/post.inc.php"); 
     include("classes/profile.inc.php"); 
+    include("classes/settings.php");
     include("classes/user.inc.php");
 
     // --------- Check user logged in --------- //
