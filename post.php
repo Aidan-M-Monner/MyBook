@@ -9,7 +9,7 @@
     <div style="width: 100%;">
         <div class="class-23">
             <?php 
-                echo $poster_name;
+                echo "<a href='profile.php?id=$ROW[user_id]' style='text-decoration: none;'>" . $poster_name . "</a>";
                 if($ROW['is_profile_image']) {
                     echo "<span style='font-weight: normal; color: #aaa;'> updated $pronoun profile image.</span>";
                 } else if($ROW['is_cover_image']) {
@@ -39,8 +39,15 @@
         <hr>
         <div>
             <a href="like.php?type=post&id=<?php echo $post_id; ?>" style="text-decoration: none;">Like<?php echo $likes ?></a> . 
-            <a href="#" style="text-decoration: none;">Comment</a> . 
-            <span class="class-24"><?php echo $ROW['date']; ?></span> 
+            <a href="single_post.php?id=<?php echo $ROW['post_id']; ?>" style="text-decoration: none;">Comment</a> . 
+            <span class="class-24"><?php echo $ROW['date']; ?></span>
+
+            <?php
+                if($ROW['has_image']) {
+                    echo ". <a href='image_view.php?id=$ROW[post_id]' style='text-decoration: none;'>View Full Image</a>"; 
+                }
+            ?>
+
             <?php if($user_post) { ?>
                 <span style="color: #999; float: right;">
                     <?php if(!$update_post) { ?>
@@ -49,6 +56,7 @@
                     <a href="delete.php?id=<?php echo $post_id; ?>" style="text-decoration: none;">Delete</a>
                 </span>
             <?php } ?>
+
         </div>
     </div>
 </div>

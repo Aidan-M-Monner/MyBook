@@ -84,7 +84,7 @@
     if($_SERVER['REQUEST_METHOD'] == "POST") {
         if(isset($_POST['first_name'])) {
             $settings_class = new Settings();
-            $settings_class->save_settings($_POST);
+            $settings_class->save_settings($_POST, $user_id);
         } else {
             $post = new Post();
             $id = $_SESSION['mybook_user_id'];

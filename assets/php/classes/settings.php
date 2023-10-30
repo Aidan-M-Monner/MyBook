@@ -9,15 +9,17 @@
 
             if(is_array($row)) {
                 return $row[0];
+                print_r($row . "<br>");
             }
         }
 
         // --------- Saving Settings --------- //
-        public function save_settings($data) {
+        public function save_settings($data, $id) {
+            $DB = new Database();
             $password = $data['password'];
 
             if(strlen($password) < 30) {
-                if($data['passwoord'] == $data['password2']) {
+                if($data['password'] == $data['password2']) {
                     $data['password'] = hash("sha1", $password);
                 } else {
                     unset($data['password']);
@@ -26,5 +28,13 @@
 
             unset($data['password2']);
 
+            $sql = "update users set ";
+            foreach($data as $key => $value) {
+                $sql .= $key . "='" . $value . "', ";
+            }
+
+            $sql = trim($sql,", ");
+            $sql .= " where user_id = '$id' limit 1";
+            $DB->save($sql);
         }
     }

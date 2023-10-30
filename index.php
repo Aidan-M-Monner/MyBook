@@ -94,7 +94,7 @@
                             }
 
                             // --------- All Posts --------- //
-                            if($posts) {
+                            if(isset($posts) && $posts) {
                                 foreach($posts as $ROW) {
                                     $user = new User();
                                     $ROW_USER = $user->get_user($ROW['user_id']);
