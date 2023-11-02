@@ -5,7 +5,8 @@
             Friends <br>
             <?php
                 if($friends) {
-                    foreach($friends as $FRIEND_ROW) {
+                    foreach($friends as $friend) {
+                        $FRIEND_ROW = $user->get_user($friend['user_id']);
                         include("user.php");
                     }
                 }

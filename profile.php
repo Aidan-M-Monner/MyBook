@@ -18,17 +18,52 @@
     <body>
         <!----------------- Top Bar ---------------------> 
         <?php include("header.php"); ?>
-        <style>
-            .class-3-a {
-                border: solid thin grey;
-                border-radius: 5px;
-                font-size: 14px;
-                height: 20px;
-                margin: 10px;
-                padding: 4px;
-                width: 100%;
-            }
-        </style>
+
+        <!----------------- Change Profile Image ---------------------> 
+        <div id="change_profile_image" style="display: none; position: absolute; width: 100%; height: 100%;">
+            <div class="class-5" style="max-width: 600px;">
+                <div class="class-11">
+                    <div class="class-13">
+                        <button onclick="hide_change_profile_image()">X</button>
+                        <form method="post" action="profile.php?change=profile" enctype="multipart/form-data">
+                            <div class="class-17">
+                                <input type="file" name="file">
+                                <input type="submit" value="Change" class="class-19" style="width: 120px;"/><br>
+                                
+                                <div style="text-align: center;"><br>
+                                    <?php 
+                                        echo "<img src='$user_data[profile_image]' style='max-width: 500px; max-height: 500px;'>";
+                                    ?>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------- Change Profile Image ---------------------> 
+        <div id="change_cover_image" style="display: none; position: absolute; width: 100%; height: 100%;">
+            <div class="class-5" style="max-width: 600px;">
+                <div class="class-11">
+                    <div class="class-13">
+                        <button onclick="hide_change_cover_image()">X</button>
+                        <form method="post" action="profile.php?change=cover" enctype="multipart/form-data">
+                            <div class="class-17">
+                                <input type="file" name="file">
+                                <input type="submit" value="Change" class="class-19" style="width: 120px;"/><br>
+                                
+                                <div style="text-align: center;"><br>
+                                    <?php 
+                                        echo "<img src='$user_data[cover_image]' style='max-width: 500px;'>";
+                                    ?>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!----------------- Cover Area ---------------------> 
         <div class="class-5">
@@ -44,8 +79,8 @@
                 <?php } ?>
                 <?php if($user_page) { ?>
                     <div class="class-c"> 
-                        <a href="change_profile_image.php?change=profile" class="class-d">Change Image</a> | 
-                        <a href="change_profile_image.php?change=cover" class="class-d">Change Cover</a>
+                        <a onclick="show_change_profile_image(event)" href="change_profile_image.php?change=profile" class="class-d">Change Image</a> | 
+                        <a onclick="show_change_cover_image(event)" href="change_profile_image.php?change=cover" class="class-d">Change Cover</a>
                     </div>
                 <?php } ?>
                 <div class="class-9"><a href="profile.php?id=<?php echo $user_data['user_id'] ?>" style="text-decoration: none;"><?php echo $full_name ?></a></div>
@@ -88,3 +123,27 @@
         </div>
     </body>
 </html>
+
+<script type="text/javascript">
+    function show_change_profile_image(event) {
+        event.preventDefault();
+        var profile_image = document.getElementById("change_profile_image");
+        profile_image.style.display = "block";
+    }
+
+    function hide_change_profile_image() {
+        var profile_image = document.getElementById("change_profile_image");
+        profile_image.style.display = "none";
+    }
+
+    function show_change_cover_image(event) {
+        event.preventDefault();
+        var cover_image = document.getElementById("change_cover_image");
+        cover_image.style.display = "block";
+    }
+
+    function hide_change_cover_image() {
+        var cover_image = document.getElementById("change_cover_image");
+        cover_image.style.display = "none";
+    }
+</script>

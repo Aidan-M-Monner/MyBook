@@ -89,7 +89,7 @@
                                 $follower_ids = implode("','", $follower_ids);
                             }
                             if($follower_ids) {
-                                $sql = "select * from posts where user_id in('" . $follower_ids . "') order by date desc limit 30";
+                                $sql = "select * from posts where parent = 0 and user_id in('" . $follower_ids . "') order by date desc limit 30";
                                 $posts = $DB->read($sql);
                             }
 

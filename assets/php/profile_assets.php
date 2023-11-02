@@ -82,7 +82,9 @@
 
     // --------- Posting Section --------- //
     if($_SERVER['REQUEST_METHOD'] == "POST") {
-        if(isset($_POST['first_name'])) {
+        if(isset($_GET['change']) && ($_GET['change'] == "profile" || $_GET['change'] == "cover")) {
+            include("profile_image_assets.php");
+        }else if(isset($_POST['first_name'])) {
             $settings_class = new Settings();
             $settings_class->save_settings($_POST, $user_id);
         } else {
@@ -113,5 +115,4 @@
 
     // --------- Friends Section --------- //
     $user = new User();
-    $id = $_SESSION['mybook_user_id'];
-    $friends = $user->get_friends($id);
+    $friends = $user->get_following($user_id, "user");

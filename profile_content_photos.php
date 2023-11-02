@@ -16,7 +16,9 @@
                         $ext = 'image/png';
                     }
 
+                    echo "<a href='single_post.php?id=$image_row[post_id]'>";
                     echo "<img src='" . $image_class->get_thumbnail_post($image_row['image'], $ext) . "' style='margin: 10px; width: 150px;'/>";
+                    echo "</a>";
                 }
             } else {
                 echo "No images were found!";

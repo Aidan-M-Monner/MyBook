@@ -4,6 +4,7 @@
     $poster_post = $ROW['post'];
     $post_id = $ROW['post_id'];
     $post_likes = $ROW['likes'];
+    $post_date = $ROW['date'];
 
     // --------- Poster Profile Image --------- //
     $poster_image = "";
@@ -100,3 +101,7 @@
     } else {
         $user_liked = $post_class->like_amount($post_likes);
     }
+
+    // --------- Check for Time --------- //
+    $time = new Time();
+    $post_time = $time->get_time($post_date);
