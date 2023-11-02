@@ -37,7 +37,7 @@
         $post_image = $image_class->get_thumbnail_post($post_image, $ext);
     }
 
-    // --------- Return User to Profile Page --------- //
+    // --------- Return User to Post Page --------- //
     $_SESSION['return_to'] = "profile.php";
     if(isset($_SERVER['HTTP_REFERER']) && !strstr($_SERVER['HTTP_REFERER'], "edit.php")) {
         $_SESSION['return_to'] = $_SERVER['HTTP_REFERER'];

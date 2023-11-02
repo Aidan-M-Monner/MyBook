@@ -1,9 +1,9 @@
 <?php 
     // --------- General Poster Information --------- //
-    $poster_name = $ROW_USER['first_name'] . " " . $ROW_USER['last_name'];
-    $poster_post = $ROW['post'];
-    $post_id = $ROW['post_id'];
-    $post_likes = $ROW['likes'];
+    $commenter_name = $ROW_USER['first_name'] . " " . $ROW_USER['last_name'];
+    $poster_comment = $COMMENT['post'];
+    $comment_id = $COMMENT['post_id'];
+    $comment_likes = $COMMENT['likes'];
 
     // --------- Poster Profile Image --------- //
     $poster_image = "";
@@ -26,15 +26,15 @@
 
     // --------- Post Image --------- //
     $image_class = new Image();
-    $post_image = $ROW['image'];
-    if(file_exists($post_image)) {
-        $ext = pathinfo($post_image, PATHINFO_EXTENSION);
+    $comment_image = $COMMENT['image'];
+    if(file_exists($comment_image)) {
+        $ext = pathinfo($comment_image, PATHINFO_EXTENSION);
         if($ext == 'jpg' || $ext == "jpeg") {
             $ext = 'image/jpeg';
         } else if ($ext == 'png') {
             $ext = 'image/png';
         }
-        $post_image = $image_class->get_thumbnail_post($post_image, $ext);
+        $comment_image = $image_class->get_thumbnail_post($comment_image, $ext);
     }
 
     // --------- Poster Gender --------- //
@@ -46,28 +46,20 @@
     }
 
     // --------- Check If Post User --------- //
-    $user_post = false;
-    if($user_id == $ROW['user_id']) {
-        $user_post = true;
+    $user_comment = false;
+    if($user_id == $COMMENT['user_id']) {
+        $user_comment = true;
     }
 
     // --------- Check If Profile Post --------- //
-    $update_post = false;
-    if($ROW['is_profile_image'] == 1 || $ROW['is_cover_image'] == 1) {
-        $update_post = true;
-    }
-
-    // --------- Comment Amount --------- //
-    $comment_count = "";
-    if($ROW['comments'] > 0) {
-        $comment_count = "Comments(" . $ROW['comments'] . ")";
-    } else {
-        $comment_count = "Comment";
+    $update_comment = false;
+    if($COMMENT['is_profile_image'] == 1 || $COMMENT['is_cover_image'] == 1) {
+        $update_comment = true;
     }
 
     // --------- Check for likes --------- //
     $likes = "";
-    $likes = ($post_likes > 0) ? "s(".$post_likes.")" : "";
+    $likes = ($comment_likes > 0) ? "s(".$comment_likes.")" : "";
 
     // --------- Check if User liked Post --------- //
     $post_class = new Post();
@@ -76,7 +68,7 @@
 
     if(isset($_SESSION['mybook_user_id'])) {
         $DB = new Database();
-        $sql = "select likes from likes where type = 'post' && content_id = '$post_id' limit 1";
+        $sql = "select likes from likes where type = 'post' && content_id = '$comment_id' limit 1";
         $result = $DB->read($sql);
 
         if(is_array($result)) {
@@ -94,9 +86,9 @@
         if($post_likes == 1) {
            $user_liked = "You liked this post";
         } else {
-            $new_post_likes = $post_likes - 1;
+            $new_post_likes = $comment_likes - 1;
             $user_liked = "You and " . $post_class->like_amount($new_post_likes);
         }
     } else {
-        $user_liked = $post_class->like_amount($post_likes);
+        $user_liked = $post_class->like_amount($comment_likes);
     }

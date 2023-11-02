@@ -2,6 +2,12 @@
     session_start();
     include("assets/php/common_assets.php");
 
+    // --------- Return User to Post Page --------- //
+    $_SESSION['return_to'] = "profile.php";
+    if(isset($_SERVER['HTTP_REFERER']) && !strstr($_SERVER['HTTP_REFERER'], "delete.php")) {
+        $_SESSION['return_to'] = $_SERVER['HTTP_REFERER'];
+    }
+
     // --------- Collect User Post --------- //
     $ERROR = "";
     $DB = new Database();
@@ -23,7 +29,7 @@
     // --------- If Something Was Posted --------- //
     if($_SERVER['REQUEST_METHOD'] == "POST") {
         $Post->delete_post($_POST['post_id']);
-        header("Location: profile.php?id=<?php echo $user_id; ?>");
+        header("Location: " . $_SESSION['return_to']);
         die;
     }
 ?>

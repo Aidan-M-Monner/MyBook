@@ -5,6 +5,8 @@
         // --------- Create Posts --------- //
         public function create_post($user_id, $data, $files) {
             if(!empty($data['post']) || !empty($files['file']['name']) || isset($data['is_profile_image']) || isset($data['is_cover_image'])) {
+                $DB = new Database();
+                
                 // Check for images
                 $myImage = "";
                 $has_image = 0;
@@ -58,10 +60,17 @@
                 }
 
                 $post_id = $this->create_post_id();
+                
+                // Find if there is a parent post
+                $parent = 0;
+                if(isset($data['parent']) && is_numeric($data['parent'])) {
+                    $parent = $data['parent'];
+                    $sql = "update posts set comments = comments + 1 where post_id = '$parent' limit 1";
+                    $DB->save($sql);
+                }
 
-                $query = "insert into posts (user_id, post_id, post, has_image, is_profile_image, is_cover_image, image) values ('$user_id', '$post_id', '$post', '$has_image', '$is_profile_image', '$is_cover_image', '$myImage')";
+                $query = "insert into posts (user_id, post_id, parent, post, has_image, is_profile_image, is_cover_image, image) values ('$user_id', '$post_id', $parent, '$post', '$has_image', '$is_profile_image', '$is_cover_image', '$myImage')";
 
-                $DB = new Database();
                 $DB->save($query);
             } else {
                 $this->error = "Please type something before posting! <br>";
@@ -157,15 +166,40 @@
             }
         }
 
+        // --------- Grabbing Comments --------- //
+        public function get_comments($id) {
+            $query = "select * from posts where parent = '$id' order by id asc limit 10";
+
+            $DB = new Database();
+            $result = $DB->read($query);
+
+            if($result) {
+                return $result;
+            } else {
+                return false;
+            }
+        }
+
         // --------- Deleting Post --------- //
         public function delete_post($post_id) {
+            $DB = new Database();
+
             if(!is_numeric($post_id)) {
                 return false; // stops function if user tries to input non-numeric characters, improving security.
             }
+            $sql = "select parent from posts where post_id = '$post_id' limit 1";
+            $result = $DB->read($sql);
+
+            // Find if there is a parent post
+            if(is_array($result)) {
+                if($result[0]['parent'] > 0) {
+                    $parent = $result[0]['parent'];
+                    $sql = "update posts set comments = comments - 1 where post_id = '$parent' limit 1";
+                    $DB->save($sql);
+                }
+            }
 
             $query = "delete from posts where post_id = '$post_id' limit 1";
-
-            $DB = new Database();
             $DB->save($query);
         }
 

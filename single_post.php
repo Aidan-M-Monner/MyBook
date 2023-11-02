@@ -12,6 +12,24 @@
         $ERROR = "No post was found!";
     }
 
+    // --------- Posting Section --------- //
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+        $post = new Post();
+        $id = $_SESSION['mybook_user_id'];
+        $result = $post->create_post($id, $_POST, $_FILES);
+
+        // Ensure that data cannot be sent again when page refreshes.
+        if($result == "") {
+            header("Location: single_post.php?id=$_GET[id]");
+            die;
+        } else {
+            echo "<div style='text-align: center; font-size: 12px; color: white; background-color: grey'>";
+            echo "<br>The following errors occured: <br><br>";
+            echo $result;
+            echo "</div>";
+        }
+    }
+
 ?>
 
 <html>
@@ -39,6 +57,26 @@
                             }
                         ?>
                         <br style="clear:both">
+                        <div class="class-17">
+                            <form method="post" enctype="multipart/form-data">
+                                <textarea placeholder="Write a comment" class="class-18" name="post"></textarea>
+                                <input type="hidden" name="parent" value="<?php echo $ROW['post_id'] ?>">
+                                <input type="file" name="file"/>
+                                <input type="submit" value="Post" class="class-19"/><br><br>
+                            </form>
+                        </div>
+
+                        <?php
+                            $Post = new Post();
+                            $comments = $Post->get_comments($ROW['post_id']);
+                            if(is_array($comments)) {
+
+                                foreach($comments as $COMMENT) {
+                                    echo "<hr>";
+                                    include("comment.php");
+                                }
+                            }
+                        ?>
                     </div>
                 </div>
             </div>
