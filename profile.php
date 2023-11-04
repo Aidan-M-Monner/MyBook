@@ -89,7 +89,7 @@
                         <?php echo $user_followers; ?>
                     </a>
                 </div><br>
-                <a href="index.php?id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Timeline</div></a>
+                <a href="index.php"><div class="class-10">Timeline</div></a>
                 <a href="profile.php?section=about&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">About</div></a>
                 <a href="profile.php?section=following&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Following</div></a>
                 <a href="profile.php?section=followers&id=<?php echo $user_data['user_id']; ?>"><div class="class-10">Followers</div></a>
@@ -124,26 +124,4 @@
     </body>
 </html>
 
-<script type="text/javascript">
-    function show_change_profile_image(event) {
-        event.preventDefault();
-        var profile_image = document.getElementById("change_profile_image");
-        profile_image.style.display = "block";
-    }
-
-    function hide_change_profile_image() {
-        var profile_image = document.getElementById("change_profile_image");
-        profile_image.style.display = "none";
-    }
-
-    function show_change_cover_image(event) {
-        event.preventDefault();
-        var cover_image = document.getElementById("change_cover_image");
-        cover_image.style.display = "block";
-    }
-
-    function hide_change_cover_image() {
-        var cover_image = document.getElementById("change_cover_image");
-        cover_image.style.display = "none";
-    }
-</script>
+<script src="assets/javascript/change_image.js" type="text/javascript"></script>

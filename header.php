@@ -1,7 +1,7 @@
 <div class="class-1">
     <form method="get" action="search.php">
         <div class="class-2">
-            <a href="index.php?id=<?php echo $user_data['user_id']; ?>" class="class-a">MyBook</a> &nbsp; &nbsp;
+            <a href="index.php" class="class-a">MyBook</a> &nbsp; &nbsp;
 
                 <input type="text" name="find" placeholder="Search for people..." class="class-3">
 

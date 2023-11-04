@@ -36,13 +36,13 @@
                 // Check which type of image to crop
                 if($change == "cover") {
                     if(file_exists($user_data['cover_image'])) {
-                        unlink($user_data['cover_image']);
+                        // unlink($user_data['cover_image']); // unlink deletes image
                     }
                     $image->resize_image($file_type, $filename, $filename, 1500, 1500);
 
                 } else {
                     if(file_exists($user_data['profile_image'])) {
-                        unlink($user_data['profile_image']);
+                        // unlink($user_data['profile_image']); // unlink deletes image
                     }
                     $image->resize_image($file_type, $filename, $filename, 1500, 1500);
                 }

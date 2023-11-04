@@ -73,6 +73,7 @@
 
                                 foreach($comments as $COMMENT) {
                                     echo "<hr>";
+                                    $ROW_USER = $User->get_user($COMMENT['user_id']);
                                     include("comment.php");
                                 }
                             }

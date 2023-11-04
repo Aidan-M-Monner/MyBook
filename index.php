@@ -81,6 +81,14 @@
 
                             $followers = $user_class->get_following($user_id, "user");
 
+                            // --------- Limits & Offsets --------- //
+                            $page_number = 1;
+                            $page_number = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                            $page_number = ($page_number < 1) ? 1 : $page_number;
+
+                            $limit = 2;
+                            $offset = ($page_number - 1) * $limit;
+
                             // --------- Grab Followed Posts --------- //
                             $follower_ids = false;
                             if(is_array($followers)) {
@@ -89,7 +97,10 @@
                                 $follower_ids = implode("','", $follower_ids);
                             }
                             if($follower_ids) {
-                                $sql = "select * from posts where parent = 0 and user_id in('" . $follower_ids . "') order by date desc limit 30";
+                                $sql = "select * from posts where parent = 0 and user_id in('" . $follower_ids . "') order by date desc limit $limit offset $offset";
+                                $posts = $DB->read($sql);
+                            } else {
+                                $sql = "select * from posts where parent = 0 and user_id = '$user_id' order by date desc limit $limit offset $offset";
                                 $posts = $DB->read($sql);
                             }
 
@@ -102,6 +113,9 @@
                                 }
                             }
                         ?>
+                        <input type="button" value="Prev Page" class="class-19" style="float: right;"/>
+                        <input type="button" value="Next Page" class="class-19" style="float: left;"/>
+                        <br>
                     </div>
                 </div>
             </div>
