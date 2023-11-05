@@ -79,15 +79,18 @@
                             $DB = new Database();
                             $user_class = new User();
 
-                            $followers = $user_class->get_following($user_id, "user");
-
                             // --------- Limits & Offsets --------- //
-                            $page_number = 1;
                             $page_number = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                             $page_number = ($page_number < 1) ? 1 : $page_number;
-
+                            
                             $limit = 2;
                             $offset = ($page_number - 1) * $limit;
+
+                            // --------- Get current URL --------- //
+                            $pg = pagination_link();
+
+
+                            $followers = $user_class->get_following($user_id, "user");
 
                             // --------- Grab Followed Posts --------- //
                             $follower_ids = false;
@@ -113,8 +116,13 @@
                                 }
                             }
                         ?>
-                        <input type="button" value="Prev Page" class="class-19" style="float: right;"/>
-                        <input type="button" value="Next Page" class="class-19" style="float: left;"/>
+                        <a href="<?php echo $pg['next_page']; ?>">
+                            <input type="button" value="Next Page" class="class-19" style="float: right;"/>
+                        </a>
+
+                        <a href="<?php echo $pg['prev_page']; ?>">
+                            <input type="button" value="Prev Page" class="class-19" style="float: left;"/>
+                        </a>
                         <br>
                     </div>
                 </div>
