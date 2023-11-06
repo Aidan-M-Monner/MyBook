@@ -34,7 +34,18 @@
                         include("post.php");
                     }
                 }
+
+                // --------- Get Current URL --------- //
+                $pg = pagination_link();
             ?>
+            <a href="<?php echo $pg['next_page']; ?>">
+                <input type="button" value="Next Page" class="class-19" style="float: right;"/>
+            </a>
+
+            <a href="<?php echo $pg['prev_page']; ?>">
+                <input type="button" value="Prev Page" class="class-19" style="float: left;"/>
+            </a>
+            <br>
         </div>
     </div>
 </div>

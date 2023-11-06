@@ -86,10 +86,6 @@
                             $limit = 2;
                             $offset = ($page_number - 1) * $limit;
 
-                            // --------- Get current URL --------- //
-                            $pg = pagination_link();
-
-
                             $followers = $user_class->get_following($user_id, "user");
 
                             // --------- Grab Followed Posts --------- //
@@ -115,6 +111,9 @@
                                     include("post.php");
                                 }
                             }
+
+                            // --------- Get Current URL --------- //
+                            $pg = pagination_link();
                         ?>
                         <a href="<?php echo $pg['next_page']; ?>">
                             <input type="button" value="Next Page" class="class-19" style="float: right;"/>
