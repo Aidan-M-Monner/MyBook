@@ -1,10 +1,13 @@
 <?php 
+    session_start();
+    include("assets/php/common_assets.php");
+
     $data = file_get_contents("php://input");
 
     if($data != "") {
-        $data = (array)json_decode($data);
+        $data = json_decode($data);
     }
 
-    if(isset($data['action']) && $data['action'] == "like_post") {
-        echo ('like post');
+    if(isset($data->action) && $data->action == "like_post") {
+        include("assets/ajax/like.ajax.php");
     }

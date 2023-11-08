@@ -61,4 +61,35 @@
     </div>
 </div>
 
-<script src="assets/javascript/like.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function ajax_send(data) {
+        var ajax = new XMLHttpRequest();
+
+        ajax.addEventListener('readystatechange', function(){
+            if(ajax.readyState == 4 && ajax.status == 200){ // Get to recieve (state 4) and get okay (status 200)
+                response(ajax.responseText);
+            } 
+        });
+
+        data = JSON.stringify(data);
+
+        ajax.open("post", "ajax.php", true); // Send the data asynchronously to not freeze data (State change 0->1)
+        ajax.send(data); // (state change 1->2)
+    }
+
+    function response(result) {
+        alert(result)
+    }
+
+    function like_post(e) {
+        e.preventDefault(); // Prevents a refresh
+
+        var link = e.target.href;
+
+        var data = {};
+        data.link = link;
+        data.action = "like_post";
+
+        ajax_send(data);
+    }
+</script>

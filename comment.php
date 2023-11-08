@@ -28,7 +28,7 @@
             }
         ?>
         <div>
-            <?php if($post_likes > 0) { ?>
+            <?php if($comment_likes > 0) { ?>
                 <span style="color: #999; float: left; font-size: 11px;">
                     <a href="likes.php?type=post&id=<?php echo $comment_id; ?>" style="text-decoration: none;">
                         <?php echo $user_liked; ?>
