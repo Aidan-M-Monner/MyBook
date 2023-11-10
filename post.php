@@ -62,12 +62,12 @@
 </div>
 
 <script type="text/javascript">
-    function ajax_send(data) {
+    function ajax_send(data, element) {
         var ajax = new XMLHttpRequest();
 
         ajax.addEventListener('readystatechange', function(){
             if(ajax.readyState == 4 && ajax.status == 200){ // Get to recieve (state 4) and get okay (status 200)
-                response(ajax.responseText);
+                response(ajax.responseText, element);
             } 
         });
 
@@ -77,8 +77,15 @@
         ajax.send(data); // (state change 1->2)
     }
 
-    function response(result) {
-        alert(result)
+    function response(result, element) {
+        if(result != ""){
+            var obj = JSON.parse(result);
+            if(typeof obj.action != 'undefined') {
+                var likes = "";
+                likes = (parseInt(obj.likes) > 0) ? "Likes(" + obj.likes + ")" : "Like";
+                element.innerHTML = likes;
+            }
+        }
     }
 
     function like_post(e) {
@@ -90,6 +97,6 @@
         data.link = link;
         data.action = "like_post";
 
-        ajax_send(data);
+        ajax_send(data, e.target);
     }
 </script>

@@ -14,13 +14,13 @@
 
     // --------- Add Like to Post --------- //
     if(isset($_GET['type']) && isset($_GET['id'])) {
+        $post_class = new Post();
+        $user_class = new User();
+
         if(is_numeric($_GET['id'])) {
             $allowed = ['post', 'user', 'comment']; // Whitelist what types of posts can be liked.
 
             if(in_array($_GET['type'], $allowed)) {
-                $post_class = new Post();
-                $user_class = new User();
-
                 $post_class->like_post($_GET['id'], $_GET['type'], $user_id);
 
                 if($_GET['type'] == "user") {
@@ -28,4 +28,13 @@
                 }
             }
         }
+
+        // Read Likes
+        $likes = $post_class->get_likes($_GET['id'], $_GET['type']);
+
+        $obj = (object)[];
+        $obj->likes = count($likes);
+        $obj->action = "like_post";
+
+        echo json_encode($obj);
     }
