@@ -99,7 +99,11 @@
             $user_liked = "You and " . $post_class->like_amount($new_post_likes);
         }
     } else {
-        $user_liked = $post_class->like_amount($post_likes);
+        if($post_likes > 0) {
+            $user_liked = $post_class->like_amount($post_likes);
+        } else {
+            $user_liked = "";
+        }
     }
 
     // --------- Check for Time --------- //

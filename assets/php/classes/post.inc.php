@@ -199,6 +199,10 @@
             if(!is_numeric($post_id)) {
                 return false; // stops function if user tries to input non-numeric characters, improving security.
             }
+
+            $Post = new Post();
+            $one_post = $Post->get_post($post_id); 
+
             $sql = "select parent from posts where post_id = '$post_id' limit 1";
             $result = $DB->read($sql);
 
@@ -212,6 +216,27 @@
             }
 
             $query = "delete from posts where post_id = '$post_id' limit 1";
+            $DB->save($query);
+
+            // Delete any images and thumbnails
+            if($one_post['image'] != "" && file_exists($one_post['image'])) {
+                unlink($one_post['image']); // unlink deletes image
+            }
+
+            if($one_post['image'] != "" && file_exists($one_post['image'] . "_post_thumb")) {
+                unlink($one_post['image'] . "_post_thumb"); // unlink deletes image
+            }
+
+            if($one_post['image'] != "" && file_exists($one_post['image'] . "_profile_thumb")) {
+                unlink($one_post['image'] . "_profile_thumb"); // unlink deletes image
+            }
+
+            if($one_post['image'] != "" && file_exists($one_post['image'] . "_cover_thumb")) {
+                unlink($one_post['image'] . "_cover_thumb"); // unlink deletes image
+            }
+
+            // Delete all comments
+            $query = "delete from posts where parent = '$post_id'";
             $DB->save($query);
         }
 

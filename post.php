@@ -28,13 +28,11 @@
             }
         ?>
         <div>
-            <?php if($post_likes > 0) { ?>
-                <span style="color: #999; float: left; font-size: 11px;">
-                    <a href="likes.php?type=post&id=<?php echo $post_id; ?>" style="text-decoration: none;">
-                        <?php echo $user_liked; ?>
-                    </a>
-                </span><br>
-            <?php } ?>
+            <?php 
+                echo '<a id="info_' . $post_id . '" href="likes.php?type=post&id=' . $post_id . '" style="text-decoration: none;">';
+                    echo '<div style="float: left; font-size: 11px;">' . $user_liked . '</div><br>';
+                echo '</a>';
+            ?>
         </div>
         <hr>
         <div>
@@ -81,9 +79,15 @@
         if(result != ""){
             var obj = JSON.parse(result);
             if(typeof obj.action != 'undefined') {
-                var likes = "";
-                likes = (parseInt(obj.likes) > 0) ? "Likes(" + obj.likes + ")" : "Like";
-                element.innerHTML = likes;
+                if(obj.action == 'like_post') {
+                    var likes = "";
+                    likes = (parseInt(obj.likes) > 0) ? "Likes(" + obj.likes + ")" : "Like";
+                    element.innerHTML = likes;
+
+                    var info_element = document.getElementById(obj.id);
+                    // console.log(info_element);
+                    info_element.innerHTML = obj.info;
+                }
             }
         }
     }
