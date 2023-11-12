@@ -70,7 +70,7 @@
             <div class="class-6">
                 <img src="<?php echo $cover; ?>" class="class-7"/>
                 <img src="<?php echo $image; ?>" class="class-8"/><br>
-                <?php if(!$user_page) { ?>
+                <?php if(!$user_page && $user_id != 0) { ?>
                 <div style="text-align: right; width:100%;">
                     <a href="like.php?type=user&id=<?php echo $user_data['user_id'] ?>">
                         <input id="post_button" type="submit" value="<?php echo $user_follow; ?>" class="class-e">

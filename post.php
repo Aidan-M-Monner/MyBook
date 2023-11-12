@@ -81,12 +81,17 @@
             if(typeof obj.action != 'undefined') {
                 if(obj.action == 'like_post') {
                     var likes = "";
-                    likes = (parseInt(obj.likes) > 0) ? "Likes(" + obj.likes + ")" : "Like";
-                    element.innerHTML = likes;
 
-                    var info_element = document.getElementById(obj.id);
-                    // console.log(info_element);
-                    info_element.innerHTML = obj.info;
+                    if(typeof obj.likes != 'undefined') {
+                        likes = (parseInt(obj.likes) > 0) ? "Likes(" + obj.likes + ")" : "Like";
+                        element.innerHTML = likes;
+                    }
+
+                    if(typeof obj.info != 'undefined') {
+                        var info_element = document.getElementById(obj.id);
+                        // console.log(info_element);
+                        info_element.innerHTML = obj.info;
+                    }
                 }
             }
         }

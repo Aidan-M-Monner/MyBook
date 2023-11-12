@@ -12,27 +12,33 @@
 
     // --------- Check user logged in --------- //
     $login = new Login();
-    $user_data = $login->check_login($_SESSION['mybook_user_id']);
+
+    $_SESSION['mybook_user_id'] = isset($_SESSION['mybook_user_id']) ? $_SESSION['mybook_userid'] : 0;
+    $user_data = $login->check_login($_SESSION['mybook_user_id'], false);
 
     // --------- User ID --------- //
-    $user_id = $user_data['user_id'];
+    $user_id = ($user_data == null) ? 0 : $user_data['user_id'];
 
     // --------- User Profile Image --------- //
     $user_image = "";
     $image_class = new Image();
-    if(file_exists($user_data['profile_image'])) {
-        $user_image = $user_data['profile_image'];
-        $ext = pathinfo($user_image, PATHINFO_EXTENSION);
+    if(!$user_data == null) {
+        if(file_exists($user_data['profile_image'])) {
+            $user_image = $user_data['profile_image'];
+            $ext = pathinfo($user_image, PATHINFO_EXTENSION);
 
-        if($ext == 'jpg' || $ext == "jpeg") {
-            $ext = 'image/jpeg';
-        } else if ($ext == 'png') {
-            $ext = 'image/png';
+            if($ext == 'jpg' || $ext == "jpeg") {
+                $ext = 'image/jpeg';
+            } else if ($ext == 'png') {
+                $ext = 'image/png';
+            }
+
+            $user_image = $image_class->get_thumbnail_profile($user_data['profile_image'], $ext);
+        } else if ($user_data['gender'] == "Male") {
+            $user_image = "assets/img/male-icon.png";
+        } else if ($user_data['gender'] == "Female") {
+            $user_image = "assets/img/female-icon.png";
         }
-
-        $user_image = $image_class->get_thumbnail_profile($user_data['profile_image'], $ext);
-    } else if ($user_data['gender'] == "Male") {
+    } else {
         $user_image = "assets/img/male-icon.png";
-    } else if ($user_data['gender'] == "Female") {
-        $user_image = "assets/img/female-icon.png";
     }

@@ -1,4 +1,12 @@
 <?php 
+    if($_SESSION['mybook_user_id'] == 0) {
+        $obj = (object)[];
+        $obj->action = "like_post";
+
+        echo json_encode($obj);
+        die;
+    }
+
     if(!isset($user_id)) {
         die;
     }

@@ -29,7 +29,7 @@
         }
 
         // --------- Checks if User Profile is Logged In --------- //
-        public function check_login($id) {
+        public function check_login($id, $redirect = true) {
             if(is_numeric($id)) {
                 $query = "select * from users where user_id = '$id' limit 1";
 
@@ -41,12 +41,20 @@
                     $user_data = $result[0];
                     return $user_data;
                 } else {
-                    header("Location: login.php");
-                    die;
+                    if($redirect) {
+                        header("Location: login.php");
+                        die;
+                    } else {
+                        $_SESSION['mybook_user_id'] = 0;
+                    }
                 }   
             } else {
-                header("Location: login.php");
-                die;
+                if($redirect) {
+                    header("Location: login.php");
+                    die;
+                } else {
+                    $_SESSION['mybook_user_id'] = 0;
+                }
             }
         }
 
