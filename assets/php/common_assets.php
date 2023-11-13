@@ -13,7 +13,7 @@
     // --------- Check user logged in --------- //
     $login = new Login();
 
-    $_SESSION['mybook_user_id'] = isset($_SESSION['mybook_user_id']) ? $_SESSION['mybook_userid'] : 0;
+    $_SESSION['mybook_user_id'] = isset($_SESSION['mybook_user_id']) ? $_SESSION['mybook_user_id'] : 0;
     $user_data = $login->check_login($_SESSION['mybook_user_id'], false);
 
     // --------- User ID --------- //

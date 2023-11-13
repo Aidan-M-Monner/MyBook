@@ -5,7 +5,7 @@
 
                 <input type="text" name="find" placeholder="Search for people..." class="class-3">
 
-            <?php if(isset($USER)) { ?>
+            <?php if($user_id != 0) { ?>
                 <a href="profile.php?id=<?php echo $user_id; ?>">
                     <img src="<?php echo $user_image; ?>" class="class-4"/>
                 </a>

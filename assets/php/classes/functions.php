@@ -52,3 +52,59 @@
 
         return $arr;
     }
+
+    // --------- Send Notifications --------- //
+    function add_notification($user_id, $activity, $row) {
+        $user_id = esc($user_id);
+        $activity = esc($activity);
+        $date = date("Y-m-d H:i:s");
+        $content_type = "";
+        $content_id = 0;
+
+        if(isset($row->post_id)) {
+            $content_id = $row->post_id;
+            $content_type = "post";
+
+            if($row->parent > 0) {
+                $content_type = "comment";
+            }
+        }
+
+        if(isset($row->gender)) {
+            $content_type = "profile";
+        }
+
+        $query = "insert into notifications (user_id, activity, content_id, content_type, content_owner, date) values ('$user_id', '$activity', '$content_id', '$content_type', '$content_owner', '$date')";
+        $DB = new Database();
+        $DB->write($query);
+    }
+
+    // --------- Send Following Notifications --------- //
+    function content_i_follow($user_id, $row) {
+        $user_id = esc($user_id);
+        $date = date("Y-m-d H:i:s");
+        $content_type = "";
+        $content_id = 0;
+
+        if(isset($row->post_id)) {
+            $content_id = $row->post_id;
+            $content_type = "post";
+
+            if($row->parent > 0) {
+                $content_type = "comment";
+            }
+        }
+
+        if(isset($row->gender)) {
+            $content_type = "profile";
+        }
+
+        $query = "insert into content_i_follow (user_id, content_id, content_type, date) values ('$user_id', '$content_id', '$content_type', '$date')";
+        $DB = new Database();
+        $DB->write($query);
+    }
+
+    // --------- Prevent Mallicious Data --------- //
+    function esc($value) {
+        return addslashes($value);
+    }
