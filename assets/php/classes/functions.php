@@ -55,9 +55,11 @@
 
     // --------- Send Notifications --------- //
     function add_notification($user_id, $activity, $row) {
+        $row = (object)$row;
         $user_id = esc($user_id);
         $activity = esc($activity);
         $date = date("Y-m-d H:i:s");
+        $content_owner = $row->user_id;
         $content_type = "";
         $content_id = 0;
 
@@ -76,7 +78,7 @@
 
         $query = "insert into notifications (user_id, activity, content_id, content_type, content_owner, date) values ('$user_id', '$activity', '$content_id', '$content_type', '$content_owner', '$date')";
         $DB = new Database();
-        $DB->write($query);
+        $DB->save($query);
     }
 
     // --------- Send Following Notifications --------- //
@@ -101,7 +103,7 @@
 
         $query = "insert into content_i_follow (user_id, content_id, content_type, date) values ('$user_id', '$content_id', '$content_type', '$date')";
         $DB = new Database();
-        $DB->write($query);
+        $DB->save($query);
     }
 
     // --------- Prevent Mallicious Data --------- //

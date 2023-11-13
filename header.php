@@ -13,6 +13,13 @@
                 <a href="logout.php">
                     <span class="class-b">Logout</span>
                 </a>
+
+                <a href="notifications.php">
+                    <span style="display: inline-block; position: relative;">
+                        <img src="assets/img/notif.svg" style="width: 25px; float: right; margin-top: 10px;">
+                        <div style="background-color: red; border-radius: 15%; color: white; font-size: 12px; height: 15px; margin-top: 4px; padding: 2px; position: absolute; right: -10px; text-align: center; width: 15px;">1</div>
+                    </span>
+                </a>
             <?php } else { ?>
                 <a href="signup.php">
                     <span class="class-b">Signup</span>
