@@ -64,6 +64,11 @@
                     // Save user/follow data
                     $sql = "update likes set following = '$follow_string' where type='$type' && content_id = '$user_id' limit 1";
                     $result = $DB->save($sql);
+
+                    // Add notification
+                    $user = new User();
+                    $single_user = $user->get_user($user_id);
+                    add_notification($user_id, "follow", $single_user);
                 } else {
                     $key = array_search($id, $user_ids); // Find array key with user
                     unset($follows[$key]); //Removes user once like is clicked again. They can unlike.
@@ -83,6 +88,11 @@
                 // Save user/like data
                 $sql = "insert into likes (type, content_id, following) values ('$type', '$user_id', '$following')";
                 $result = $DB->save($sql);
+
+                // Add notification
+                $user = new User();
+                $single_user = $user->get_user($user_id);
+                add_notification($user_id, "follow", $single_user);
             }
         }
 

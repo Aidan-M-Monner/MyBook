@@ -35,15 +35,9 @@
             if(in_array($_GET['type'], $allowed)) {
                 $post_class->like_post($_GET['id'], $_GET['type'], $user_id);
 
-                $single_post = $post_class->get_post($_GET['id']);
-
                 if($_GET['type'] == "user") {
                     $user_class->follow_user($_GET['id'], $_GET['type'], $user_id);
-                    $single_post = $user_class->get_user($_GET['id']);
                 }
-
-                // Add notification
-                add_notification($user_id, "like", $single_post);
             }
         }
 

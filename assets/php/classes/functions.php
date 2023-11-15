@@ -70,10 +70,11 @@
             if($row->parent > 0) {
                 $content_type = "comment";
             }
-        }
+        } 
 
         if(isset($row->gender)) {
             $content_type = "profile";
+            $content_id = $row->user_id;
         }
 
         $query = "insert into notifications (user_id, activity, content_id, content_type, content_owner, date) values ('$user_id', '$activity', '$content_id', '$content_type', '$content_owner', '$date')";

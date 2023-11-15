@@ -35,7 +35,8 @@
                     <div class="class-17">
                         <?php
                             $DB = new Database();
-                            $query = "select * from notifications limit 30";
+                            $id = esc($user_id);
+                            $query = "select * from notifications where content_owner = '$id' order by id desc limit 30";
                             $data = $DB->read($query);
                         ?>
 
@@ -44,7 +45,9 @@
                                 foreach($data as $notif_row) {
                                     include("single_notification.php");
                                 }
-                            } 
+                            } else {
+                                echo "No notifications were found.";
+                            }
                         ?>
                     </div>
                 </div>

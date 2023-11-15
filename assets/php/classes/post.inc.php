@@ -267,6 +267,11 @@
                     // Increment the Posts table
                     $sql = "update {$type}s set likes = likes + 1 where {$type}_id = '$id' limit 1";
                     $DB->save($sql);
+
+                    // Add notification
+                    $post = new Post();
+                    $single_post = $post->get_post($id);
+                    add_notification($user_id, "like", $single_post);
                 } else {
                     $key = array_search($user_id, $user_ids); // Find array key with user
                     unset($likes[$key]); //Removes user once like is clicked again. They can unlike.
@@ -294,6 +299,11 @@
                 // Increment the right table
                 $sql = "update {$type}s set likes = likes + 1 where {$type}_id = '$id' limit 1";
                 $DB->save($sql);
+
+                // Add notification
+                $post = new Post();
+                $single_post = $post->get_post($id);
+                add_notification($user_id, "like", $single_post);
             }
         }
 
