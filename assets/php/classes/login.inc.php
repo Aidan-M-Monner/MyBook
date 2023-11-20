@@ -15,14 +15,14 @@
             // Checks to see if email and password are returned.
             if($result) {
                 $row = $result[0]; // grabs array to get password for checking.
-                if($password == $row['password']) {
+                if($this->hash_text($password) == $row['password']) {
                     // Create a session data
                     $_SESSION['mybook_user_id'] = $row['user_id'];
                 } else {
                     $this->error .= "Wrong email or password <br>";
                 }
             } else {
-                $this->error .= "No such email was found <br>";
+                $this->error .= "Wrong email or password <br>";
             }
             
             return $this->error;
@@ -48,5 +48,11 @@
                 header("Location: login.php");
                 die;
             }
+        }
+
+        // --------- Encrypts/Decrypts User Passwords --------- //
+        private function hash_text($text) {
+            $text = hash("sha1", $text);
+            return $text;
         }
     }

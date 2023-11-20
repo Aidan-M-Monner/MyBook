@@ -1,7 +1,10 @@
 <?php
     session_start();
     include("assets/php/common_assets.php");
-    include("assets/php/profile_image_assets.php");
+
+    if($_SERVER['REQUEST_METHOD'] == "POST") {
+        include("assets/php/profile_image_assets.php");
+    }
 ?>
 
 <html>

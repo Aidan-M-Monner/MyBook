@@ -19,10 +19,10 @@
             // Check if file exists
             if(file_exists($original_file_name)) {
                 // Check image type then create copy
-                if($file_type == 'image/jpeg') {
-                    $original_image = imagecreatefromjpeg($original_file_name);
-                } else if ($file_type == 'image/png') {
+                if ($file_type == 'image/png') {
                     $original_image = imagecreatefrompng($original_file_name);
+                } else if ($file_type == 'image/jpg' || $file_type == 'image/jpeg') {
+                    $original_image = imagecreatefromjpeg($original_file_name);
                 }
 
                 // Collect image height and width
@@ -117,11 +117,11 @@
         public function resize_image($file_type, $original_file_name, $resized_file_name, $max_width, $max_height) {
             // Check if file exists
             if(file_exists($original_file_name)) {
-            // Check image type then create copy
-                if($file_type == 'image/jpeg') {
-                    $original_image = imagecreatefromjpeg($original_file_name);
-                } else if ($file_type == 'image/png') {
+                // Check image type then create copy
+                if ($file_type == 'image/png') {
                     $original_image = imagecreatefrompng($original_file_name);
+                } else if ($file_type == 'image/jpg' || $file_type == 'image/jpeg') {
+                    $original_image = imagecreatefromjpeg($original_file_name);
                 }
 
                 // Collect image height and width

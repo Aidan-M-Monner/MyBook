@@ -22,7 +22,7 @@
                 <input value='<?php echo $last_name ?>' type="text" placeholder="Last Name" class="class-5" name="last_name"><br><br>
 
                 <select class="class-5" name="gender">
-                    <option><?php echo $gender ?></option>
+                    <option><?php echo $gender; ?></option>
                     <option>Male</option>
                     <option>Female</option>
                 </select><br><br>

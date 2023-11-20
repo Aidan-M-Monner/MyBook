@@ -28,6 +28,16 @@ body {
     width: 400px;
 }
 
+.class-3-a {
+    border: solid thin grey;
+    border-radius: 5px;
+    font-size: 14px;
+    height: 20px;
+    margin: 10px;
+    padding: 4px;
+    width: 100%;
+}
+
 .class-4 {
     float: right;
     width: 50px;
@@ -77,6 +87,18 @@ body {
 .class-d {
     color: #F0F;
     text-decoration: none;
+}
+
+.class-e {
+    background-color: #405D9B;
+    border: none;
+    border-radius: 2px;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    min-width: 50px;
+    padding: 4px;
 }
 
 .class-9 {
@@ -150,19 +172,22 @@ body {
     border: none;
     border-radius: 2px;
     color: #FFF;
+    cursor: pointer;
     font-size: 14px;
     float: right;
+    min-width: 50px;
     padding: 4px;
 }
 
 /*----------------- Posts Area ---------------------*/
 .class-20 {
-    background-color: #FFF;
+    background-color: #CDCDCD;
     margin-top: 20px;
     padding: 10px;
 }
 
 .class-21 {
+    background-color: #FFF;
     display: flex;
     font-size: 13px;
     margin-bottom: 20px;

@@ -1,53 +1,15 @@
 <?php
-    $poster_name = $ROW_USER['first_name'] . " " . $ROW_USER['last_name'];
-    $poster_post = $ROW['post'];
-
-    $poster_image = "";
-    if(file_exists($ROW_USER['profile_image'])) {
-        $poster_image = $ROW_USER['profile_image'];
-        $ext = pathinfo($poster_image, PATHINFO_EXTENSION);
-
-        if($ext == 'jpg' || $ext == "jpeg") {
-            $ext = 'image/jpeg';
-        } else if ($ext == 'png') {
-            $ext = 'image/png';
-        }
-
-        $poster_image = $image_class->get_thumbnail_profile($poster_image, $ext);
-    } else if ($ROW_USER['gender'] == "Male") {
-        $poster_image = "assets/img/male-icon.png";
-    } else if ($ROW_USER['gender'] == "Female") {
-        $poster_image = "assets/img/female-icon.png";
-    }
-
-    $image_class = new Image();
-    $post_image = $ROW['image'];
-    if(file_exists($post_image)) {
-        $ext = pathinfo($cover, PATHINFO_EXTENSION);
-        if($ext == 'jpg' || $ext == "jpeg") {
-            $ext = 'image/jpeg';
-        } else if ($ext == 'png') {
-            $ext = 'image/png';
-        }
-        $post_image = $image_class->get_thumbnail_post($post_image, $ext);
-    }
-
-    $pronoun = "";
-    if($ROW_USER['gender'] == 'Male') {
-        $pronoun = "his";
-    } else if($ROW_USER['gender'] == 'Female') {
-        $pronoun = "her";
-    }
+    include("assets/php/post_assets.php");
 ?>
 
-<div class="class-21">
+<div class="class-21" style="background-color: #FFF;">
     <div>
         <img src="<?php echo $poster_image; ?>" class="class-22"/>
     </div>
     <div style="width: 100%;">
         <div class="class-23">
             <?php 
-                echo $poster_name;
+                echo "<a href='profile.php?id=$ROW[user_id]' style='text-decoration: none;'>" . $poster_name . "</a>";
                 if($ROW['is_profile_image']) {
                     echo "<span style='font-weight: normal; color: #aaa;'> updated $pronoun profile image.</span>";
                 } else if($ROW['is_cover_image']) {
@@ -57,7 +19,7 @@
         </div>
         <?php
             if(!$poster_post == "") {
-                echo $poster_post . "<br><br>";
+                echo htmlspecialchars($poster_post) . "<br><br>";
             }
         ?>
         <?php 
@@ -65,9 +27,36 @@
                 echo "<img src='$post_image' style='width: 300px; height: 300px;'/><br><br>";
             }
         ?>
-        <a href="#">Like</a> . 
-        <a href="#">Comment</a> . 
-        <span class="class-24"><?php echo $ROW['date']; ?></span> 
-        <span style="color: #999; float: right;">Edit . Delete</span>
+        <div>
+            <?php if($post_likes > 0) { ?>
+                <span style="color: #999; float: left; font-size: 11px;">
+                    <a href="likes.php?type=post&id=<?php echo $post_id; ?>" style="text-decoration: none;">
+                        <?php echo $user_liked; ?>
+                    </a>
+                </span><br>
+            <?php } ?>
+        </div>
+        <hr>
+        <div>
+            <a href="like.php?type=post&id=<?php echo $post_id; ?>" style="text-decoration: none;">Like<?php echo $likes ?></a> . 
+            <a href="single_post.php?id=<?php echo $ROW['post_id']; ?>" style="text-decoration: none;"><?php echo $comment_count; ?></a> . 
+            <span class="class-24"><?php echo $post_time; ?></span>
+
+            <?php
+                if($ROW['has_image']) {
+                    echo ". <a href='image_view.php?id=$ROW[post_id]' style='text-decoration: none;'>View Full Image</a>"; 
+                }
+            ?>
+
+            <?php if($user_post) { ?>
+                <span style="color: #999; float: right;">
+                    <?php if(!$update_post) { ?>
+                        <a href="edit.php?id=<?php echo $post_id; ?>" style="text-decoration: none;">Edit</a> . 
+                    <?php } ?>
+                    <a href="delete.php?id=<?php echo $post_id; ?>" style="text-decoration: none;">Delete</a>
+                </span>
+            <?php } ?>
+
+        </div>
     </div>
 </div>
