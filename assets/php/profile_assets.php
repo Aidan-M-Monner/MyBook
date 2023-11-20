@@ -115,4 +115,4 @@
 
     // --------- Friends Section --------- //
     $user = new User();
-    $friends = $user->get_following($user_id, "user");
+    $friends = $user->get_following($user_data['user_id'], "user");

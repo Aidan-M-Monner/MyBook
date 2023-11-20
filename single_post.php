@@ -41,11 +41,11 @@
         <!----------------- Top Bar ---------------------> 
         <?php include("header.php"); ?>
 
-        <!----------------- Delete Area ---------------------> 
+        <!----------------- Post Area ---------------------> 
         <div class="class-5">
             <div class="class-11">
 
-                <!----------------- Deleting Post Area ---------------------> 
+                <!----------------- Post Content Area ---------------------> 
                 <div class="class-13">
                     <div class="class-17">
                         <?php 
@@ -66,17 +66,19 @@
                             </form>
                         </div>
 
-                        <?php
-                            $Post = new Post();
-                            $comments = $Post->get_comments($ROW['post_id']);
-                            if(is_array($comments)) {
+                        <div class="class-20">
+                            <?php
+                                $Post = new Post();
+                                $comments = $Post->get_comments($ROW['post_id']);
+                                if(is_array($comments)) {
 
-                                foreach($comments as $COMMENT) {
-                                    echo "<hr>";
-                                    include("comment.php");
+                                    foreach($comments as $COMMENT) {
+                                        $ROW_USER = $User->get_user($COMMENT['user_id']);
+                                        include("comment.php");
+                                    }
                                 }
-                            }
-                        ?>
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>

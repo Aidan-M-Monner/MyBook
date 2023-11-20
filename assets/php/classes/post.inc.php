@@ -214,9 +214,7 @@
             if(is_array($result)) {
                 // User/like data
                 $likes = json_decode($result[0]['likes'], true); // true prevents $likes from being an object rather than an array.
-                $user_ids = array_column($likes, "user_id");
-
-                if(!in_array($user_id, $user_ids)) {
+                if($likes == null) {
                     $arr['user_id'] = $user_id;
                     $arr['date'] = date("Y-m-d H:i:s");
 
@@ -231,18 +229,36 @@
                     $sql = "update {$type}s set likes = likes + 1 where {$type}_id = '$id' limit 1";
                     $DB->save($sql);
                 } else {
-                    $key = array_search($user_id, $user_ids); // Find array key with user
-                    unset($likes[$key]); //Removes user once like is clicked again. They can unlike.
-                    $likes_string = json_encode($likes);
+                    $user_ids = array_column($likes, "user_id");
 
-                    // Save user/unlike data
-                    $sql = "update likes set likes = '$likes_string' where type='$type' && content_id = '$id' limit 1";
-                    $result = $DB->save($sql);
+                    if(!in_array($user_id, $user_ids)) {
+                        $arr['user_id'] = $user_id;
+                        $arr['date'] = date("Y-m-d H:i:s");
 
-                    // Decrement the right table
-                    $sql = "update {$type}s set likes = likes - 1 where {$type}_id = '$id' limit 1";
-                    $DB->save($sql);
-                } 
+                        $likes[] = $arr;
+                        $likes_string = json_encode($likes);
+
+                        // Save user/like data
+                        $sql = "update likes set likes = '$likes_string' where type='$type' && content_id = '$id' limit 1";
+                        $result = $DB->save($sql);
+
+                        // Increment the Posts table
+                        $sql = "update {$type}s set likes = likes + 1 where {$type}_id = '$id' limit 1";
+                        $DB->save($sql);
+                    } else {
+                        $key = array_search($user_id, $user_ids); // Find array key with user
+                        unset($likes[$key]); //Removes user once like is clicked again. They can unlike.
+                        $likes_string = json_encode($likes);
+
+                        // Save user/unlike data
+                        $sql = "update likes set likes = '$likes_string' where type='$type' && content_id = '$id' limit 1";
+                        $result = $DB->save($sql);
+
+                        // Decrement the right table
+                        $sql = "update {$type}s set likes = likes - 1 where {$type}_id = '$id' limit 1";
+                        $DB->save($sql);
+                    } 
+                }
             } else {
                 // User/like data
                 $arr['user_id'] = $user_id;

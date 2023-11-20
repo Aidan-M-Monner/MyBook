@@ -52,9 +52,7 @@
             if(is_array($result)) {
                 // User/following data
                 $follows = json_decode($result[0]['following'], true); // true prevents $likes from being an object rather than an array.
-                $user_ids = array_column($follows, "user_id");
-
-                if(!in_array($id, $user_ids)) {
+                if($follows == null) {
                     $arr['user_id'] = $id;
                     $arr['date'] = date("Y-m-d H:i:s");
 
@@ -65,14 +63,28 @@
                     $sql = "update likes set following = '$follow_string' where type='$type' && content_id = '$user_id' limit 1";
                     $result = $DB->save($sql);
                 } else {
-                    $key = array_search($id, $user_ids); // Find array key with user
-                    unset($follows[$key]); //Removes user once like is clicked again. They can unlike.
-                    $follow_string = json_encode($follows);
+                    $user_ids = array_column($follows, "user_id");
 
-                    // Save user/unfollow data
-                    $sql = "update likes set following = '$follow_string' where type='$type' && content_id = '$user_id' limit 1";
-                    $result = $DB->save($sql);
-                } 
+                    if(!in_array($id, $user_ids)) {
+                        $arr['user_id'] = $id;
+                        $arr['date'] = date("Y-m-d H:i:s");
+
+                        $follows[] = $arr;
+                        $follow_string = json_encode($follows);
+
+                        // Save user/follow data
+                        $sql = "update likes set following = '$follow_string' where type='$type' && content_id = '$user_id' limit 1";
+                        $result = $DB->save($sql);
+                    } else {
+                        $key = array_search($id, $user_ids); // Find array key with user
+                        unset($follows[$key]); //Removes user once like is clicked again. They can unlike.
+                        $follow_string = json_encode($follows);
+
+                        // Save user/unfollow data
+                        $sql = "update likes set following = '$follow_string' where type='$type' && content_id = '$user_id' limit 1";
+                        $result = $DB->save($sql);
+                    } 
+                }
             } else {
                 // User/like data
                 $arr['user_id'] = $id;

@@ -9,7 +9,7 @@
     <div style="width: 100%;">
         <div class="class-23">
             <?php 
-                echo "<a href='profile.php?id=$COMMENT[user_id]' style='text-decoration: none;'>" . $poster_name . "</a>";
+                echo "<a href='profile.php?id=$COMMENT[user_id]' style='text-decoration: none;'>" . $commenter_name . "</a>";
                 if($COMMENT['is_profile_image']) {
                     echo "<span style='font-weight: normal; color: #aaa;'> updated $pronoun profile image.</span>";
                 } else if($COMMENT['is_cover_image']) {
