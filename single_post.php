@@ -77,7 +77,18 @@
                                         include("comment.php");
                                     }
                                 }
+
+                                // --------- Get Current URL --------- //
+                                $pg = pagination_link();
                             ?>
+                            <a href="<?php echo $pg['prev_page']; ?>">
+                                <input type="submit" value="Prev Page" class="class-19" style="cursor: pointer; float: left; width: 150px;"/>
+                            </a>
+    
+                            <a href="<?php echo $pg['next_page']; ?>">
+                                <input type="submit" value="Next Page" class="class-19" style="cursor: pointer; float: right; width: 150px;"/>
+                            </a>
+                            <br>
                         </div>
                     </div>
                 </div>

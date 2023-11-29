@@ -136,7 +136,13 @@
 
         // --------- Grabbing Posts --------- //
         public function get_posts($id) {
-            $query = "select * from posts where user_id = '$id' order by id desc limit 10";
+            $page_number = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+            $page_number = ($page_number < 1) ? 1 : $page_number;
+
+            $limit = 2;
+            $offset = ($page_number - 1) * $limit;
+
+            $query = "select * from posts where user_id = '$id' order by id desc limit $limit offset $offset";
 
             $DB = new Database();
             $result = $DB->read($query);
@@ -168,7 +174,13 @@
 
         // --------- Grabbing Comments --------- //
         public function get_comments($id) {
-            $query = "select * from posts where parent = '$id' order by id asc limit 10";
+            $page_number = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
+            $page_number = ($page_number < 1) ? 1 : $page_number;
+
+            $limit = 2;
+            $offset = ($page_number - 1) * $limit;
+
+            $query = "select * from posts where parent = '$id' order by id asc limit $limit offset $offset";
 
             $DB = new Database();
             $result = $DB->read($query);

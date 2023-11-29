@@ -84,28 +84,8 @@
                             $page_number = (isset($_GET['page'])) ? (int)$_GET['page'] : 1;
                             $page_number = ($page_number < 1) ? 1 : $page_number;
 
-                            $limit = 4;
+                            $limit = 10;
                             $offset = ($page_number - 1) * $limit;
-
-                            // --------- Get Current URL --------- //
-                            $url = $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME'];
-                            $num = 0;
-                            foreach($_GET as $key => $value) {
-                                $num++;
-                                if($num == 1) {
-                                    if($key == "page") {
-                                        $url .= $key . "=" . ($page_number + 1);
-                                    } else {
-                                        $url .= $key . "=" . $value;
-                                    }
-                                } else {
-                                    if($key == "page") {
-                                        $url .= $key . "=" . ($page_number + 1);
-                                    } else {
-                                        $url .= $key . "=" . $value;
-                                    }
-                                }
-                            }
 
                             // --------- Grab Followed Posts --------- //
                             $follower_ids = false;
@@ -127,12 +107,15 @@
                                     include("post.php");
                                 }
                             }
+
+                            // --------- Get Current URL --------- //
+                            $pg = pagination_link();
                         ?>
-                        <a href="index.php?id=<?php echo $user_data['user_id']; ?>&page=<?php echo ($page_number - 1); ?>">
+                        <a href="<?php echo $pg['prev_page']; ?>">
                             <input type="submit" value="Prev Page" class="class-19" style="cursor: pointer; float: left; width: 150px;"/>
                         </a>
 
-                        <a href="index.php?id=<?php echo $user_data['user_id']; ?>&page=<?php echo ($page_number + 1); ?>">
+                        <a href="<?php echo $pg['next_page']; ?>">
                             <input type="submit" value="Next Page" class="class-19" style="cursor: pointer; float: right; width: 150px;"/>
                         </a>
                         <br>
