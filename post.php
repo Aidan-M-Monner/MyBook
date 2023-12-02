@@ -38,7 +38,7 @@
         </div>
         <hr>
         <div>
-            <a href="like.php?type=post&id=<?php echo $post_id; ?>" style="text-decoration: none;">Like<?php echo $likes ?></a> . 
+            <a onclick="like_post(event)" href="like.php?type=post&id=<?php echo $post_id; ?>" style="text-decoration: none;">Like<?php echo $likes ?></a> . 
             <a href="single_post.php?id=<?php echo $ROW['post_id']; ?>" style="text-decoration: none;"><?php echo $comment_count; ?></a> . 
             <span class="class-24"><?php echo $post_time; ?></span>
 
@@ -60,3 +60,5 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="assets/javascript/like.js"></script>
