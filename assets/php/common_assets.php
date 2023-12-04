@@ -1,14 +1,6 @@
 <?php 
     // --------- Necessary Files/Expressions to Start --------- //
-    include("classes/connect.php");
-    include("classes/functions.php");
-    include("classes/image.php");
-    include("classes/login.inc.php"); 
-    include("classes/post.inc.php"); 
-    include("classes/profile.inc.php"); 
-    include("classes/settings.php");
-    include("classes/time.php");
-    include("classes/user.inc.php");
+    include("necessary_files.php");
 
     // --------- Check user logged in --------- //
     $login = new Login();

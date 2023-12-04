@@ -1,0 +1,10 @@
+<?php
+    include("classes/connect.php");
+    include("classes/functions.php");
+    include("classes/image.php");
+    include("classes/login.inc.php"); 
+    include("classes/post.inc.php"); 
+    include("classes/profile.inc.php"); 
+    include("classes/settings.php");
+    include("classes/time.php");
+    include("classes/user.inc.php");
